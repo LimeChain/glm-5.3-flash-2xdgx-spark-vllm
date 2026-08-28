@@ -1,0 +1,73 @@
+name: Build ARM64 runtime
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: GHCR tag
+        required: true
+        default: vllm-glm53-sm121
+        type: string
+      push_image:
+        description: Push after build
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+
+concurrency:
+  group: glm53-container-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, ARM64, dgx-spark]
+    timeout-minutes: 120
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }}
+      BASE_IMAGE: vllm/vllm-openai:glm53-flash-arm64-cu130@sha256:905c02933be6021301db2dc284e24e3727467aa3a0f63b41d609885778a07bce
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        if: inputs.push_image
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ inputs.image_tag }}
+            type=sha,prefix=sha-
+      - id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: container/Dockerfile
+          platforms: linux/arm64
+          push: ${{ inputs.push_image }}
+          load: ${{ !inputs.push_image }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            BASE_IMAGE=${{ env.BASE_IMAGE }}
+            REVISION=${{ github.sha }}
+            BASE_IMAGE_DIGEST=sha256:905c02933be6021301db2dc284e24e3727467aa3a0f63b41d609885778a07bce
+          provenance: mode=max
+      - name: Attest pushed image
+        if: inputs.push_image
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true

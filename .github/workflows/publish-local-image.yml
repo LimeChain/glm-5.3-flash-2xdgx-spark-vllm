@@ -1,0 +1,62 @@
+name: Publish a locally validated image
+
+on:
+  workflow_dispatch:
+    inputs:
+      local_image:
+        description: Existing image tag on the trusted self-hosted runner
+        required: true
+        default: glm53-sm121:local
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: glm53-publish-local
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: [self-hosted, linux, ARM64, dgx-spark]
+    timeout-minutes: 30
+    env:
+      TARGET_IMAGE: ghcr.io/${{ github.repository }}:vllm-glm53-sm121
+      SHA_IMAGE: ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
+    steps:
+      - name: Verify exact locally validated image
+        env:
+          LOCAL_IMAGE: ${{ inputs.local_image }}
+        run: |
+          docker image inspect "$LOCAL_IMAGE" >/dev/null
+          revision="$(docker image inspect "$LOCAL_IMAGE" \
+            --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')"
+          test "$revision" = "$GITHUB_SHA"
+          local_heads="$(docker image inspect "$LOCAL_IMAGE" \
+            --format '{{ index .Config.Labels "io.glm53-gb10.tp-local-heads" }}')"
+          test "$local_heads" = "32,64"
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: publish
+        name: Publish stable and immutable tags
+        env:
+          LOCAL_IMAGE: ${{ inputs.local_image }}
+        run: |
+          docker tag "$LOCAL_IMAGE" "$TARGET_IMAGE"
+          docker tag "$LOCAL_IMAGE" "$SHA_IMAGE"
+          push_output="$(docker push "$TARGET_IMAGE")"
+          printf '%s\n' "$push_output"
+          docker push "$SHA_IMAGE"
+          digest="$(printf '%s\n' "$push_output" |
+            sed -n 's/^.*digest: \(sha256:[0-9a-f]\{64\}\).*$/\1/p' |
+            tail -n 1)"
+          test -n "$digest"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+          echo "Published $TARGET_IMAGE@$digest" >> "$GITHUB_STEP_SUMMARY"
+      - name: Verify registry manifest
+        run: docker buildx imagetools inspect "$TARGET_IMAGE@${{ steps.publish.outputs.digest }}"

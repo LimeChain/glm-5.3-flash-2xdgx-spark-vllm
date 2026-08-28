@@ -1,0 +1,27 @@
+name: Validate repository
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install validators
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Validate files
+        run: |
+          bash -n scripts/*.sh
+          shellcheck scripts/*.sh
+          python3 -m py_compile \
+            overlay/sitecustomize.py \
+            scripts/verify-runtime-contract.py \
+            bench/benchmark.py
+          python3 scripts/verify-public-repo.py
