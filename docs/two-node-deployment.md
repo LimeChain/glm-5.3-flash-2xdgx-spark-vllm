@@ -8,7 +8,7 @@ This guide reproduces the qualified TP2 topology without carrying private hostna
 - Model files are mounted read-only.
 - Hugging Face and Transformers are forced offline at serve time.
 - The launcher refuses to replace an already-running container.
-- The qualified configuration is fail-closed: MTP3, 262,144 context, C12 admission, 8,192 batched tokens, 0.82 GPU-memory utilization, and eager execution.
+- The qualified configuration is fail-closed: MTP3, 262,144 context, C12 admission, 8,192 batched tokens, 0.82 GPU-memory utilization, eager execution, and thinking enabled at High.
 - `stop-tp2.sh` stops and removes only the configured container name on the two configured nodes.
 
 ## 1. Fabric
@@ -85,6 +85,8 @@ After `GLM_READY`:
 ```bash
 curl -fsS http://127.0.0.1:8000/v1/models
 ```
+
+The server defaults to `enable_thinking=true` and `reasoning_effort=high`. With the `glm45` reasoning parser, OpenAI-compatible responses expose reasoning separately from final content.
 
 Keep the service private behind SSH forwarding, Tailscale, or another authenticated transport if remote clients need access. Do not expose an unauthenticated vLLM endpoint directly to the public internet.
 

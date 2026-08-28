@@ -58,6 +58,13 @@ for expected in (
 ):
     assert expected in overlay, f"missing runtime-overlay contract: {expected}"
 
+rank_launcher = (ROOT / "scripts/rank-tp2.sh").read_text()
+assert (
+    "--default-chat-template-kwargs "
+    "'{\"enable_thinking\":true,\"reasoning_effort\":\"high\"}'"
+    in rank_launcher
+), "rank launcher must default to thinking enabled at High"
+
 receipt = json.loads((ROOT / "results/production-tp2-mtp3-262k.json").read_text())
 assert receipt["schema"] == "glm53-sm121-public-benchmark-summary.v1"
 assert receipt["source_revision"] == "4c290638cb174721217c903e2dbf92b9858a080b"
@@ -84,6 +91,8 @@ for expected in (
     "C4/C6/C8 are **aggregate throughput**",
     "no C12 throughput is claimed",
     "140,012-token prompt",
+    "Thinking enabled by default",
+    "enabled by default at High",
 ):
     assert expected in readme, f"README claim missing: {expected}"
 

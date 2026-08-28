@@ -33,8 +33,19 @@ C4/C6/C8 are **aggregate throughput**, not per-request speed. Full machine-reada
 | Context | 262,144 configured; 140,012-token prompt completed |
 | Scheduler | `max_num_seqs=12`, 8,192 batched tokens |
 | Execution | eager |
+| Thinking | enabled by default at High; `glm45` reasoning parser |
 
 The production run also passed deterministic arithmetic (`17 × 23 = 391`), tool-call parsing, endpoint health, and a 140K-token prompt. It completed with zero container restarts, zero OOM kills, and 372,827 realized KV-cache tokens.
+
+### Thinking enabled by default
+
+The rank launcher now starts GLM-5.3 with thinking enabled at **High**:
+
+```json
+{"enable_thinking":true,"reasoning_effort":"high"}
+```
+
+The `glm45` reasoning parser keeps reasoning separate from final content in the OpenAI-compatible response. Clients can still send an explicit `reasoning_effort` when they need a different supported level; requests that omit it inherit High from the server.
 
 ## Why this adapter exists
 
@@ -148,6 +159,7 @@ Run it after each independent cold start. The harness is frozen to C1/C4/C6/C8, 
 - `max_num_seqs=12` is an admission ceiling, not a C12 throughput result. During the admission test, nine requests ran and three waited; no C12 throughput is claimed.
 - The benchmark does not establish model-quality equivalence, global speed leadership, or a matched comparison with other public recipes.
 - C1/C4/C6/C8 results bind the exact production source/profile identified in the receipt. Re-run before publishing numbers for a materially changed image or configuration.
+- The published throughput receipt predates this default-thinking launcher change. Re-run it before representing the table as a matched High-reasoning benchmark.
 - Eager execution is the qualified profile in this release.
 
 ## Provenance and licensing

@@ -121,7 +121,7 @@ docker run -d \
     --skip-mm-profiling \
     --tool-call-parser glm47 --enable-auto-tool-choice \
     --reasoning-parser glm45 \
-    --default-chat-template-kwargs '{"enable_thinking":false}' \
+    --default-chat-template-kwargs '{"enable_thinking":true,"reasoning_effort":"high"}' \
     --generation-config vllm \
     "${SPEC_ARGS[@]}" \
     --distributed-executor-backend mp \
