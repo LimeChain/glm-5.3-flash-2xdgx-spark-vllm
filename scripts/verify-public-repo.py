@@ -11,7 +11,6 @@ ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED = {
     "README.md",
-    "README.zh-CN.md",
     "THIRD_PARTY_NOTICES.md",
     "config/cluster.env.example",
     "config/versions.env",

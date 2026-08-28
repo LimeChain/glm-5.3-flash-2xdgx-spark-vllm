@@ -1,7 +1,5 @@
 # GLM-5.3 Flash NVFP4 on 2× NVIDIA DGX Spark
 
-[简体中文](README.zh-CN.md)
-
 Run the full **GLM-5.3 Flash NVFP4** checkpoint across two NVIDIA DGX Spark systems with vLLM tensor parallelism, FlashInfer sparse MLA, FP8 KV cache, and MTP3 speculative decoding.
 
 **Measured production result:** **29.74 tok/s at C1** and **101.74 aggregate tok/s at C8**, with a configured 262,144-token context window.
