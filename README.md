@@ -47,6 +47,12 @@ The rank launcher now starts GLM-5.3 with thinking enabled at **High**:
 
 The `glm45` reasoning parser keeps reasoning separate from final content in the OpenAI-compatible response. Clients can still send an explicit `reasoning_effort` when they need a different supported level; requests that omit it inherit High from the server.
 
+The pinned checkpoint template ignores `enable_thinking=false`. Sending that
+flag alone can merge reasoning and final text in the response. See the
+[thinking-mode correction and measured tuning workflow](docs/tuning.md) before
+running non-thinking tests. The adaptation writes a separate template and
+preserves the verified checkpoint.
+
 ## Why this adapter exists
 
 GLM-5.3 is logically NoPE, while the current FlashInfer SM120/SM121 `fp8_ds_mla` GLM_NSA kernel uses a fixed physical ABI:
@@ -73,6 +79,8 @@ No model tensor or Hugging Face configuration field is rewritten. See [`docs/ada
 - `scripts/rank-tp2.sh` — parameterized rank launcher for two DGX Sparks.
 - `scripts/start-tp2.sh` / `scripts/stop-tp2.sh` — worker-first TP2 lifecycle.
 - `bench/benchmark.py` — the frozen C1/C4/C6/C8 benchmark harness.
+- `bench/tune.py` — experimental counting, coding, reasoning, and mixed-task measurements.
+- `docs/tuning.md` — hardware qualification, template correction, and tuning procedure.
 - `results/` — sanitized production benchmark receipt.
 
 Model weights, Docker layers, CUDA caches, host configuration, credentials, and private logs are intentionally not included.
@@ -84,7 +92,7 @@ Model weights, Docker layers, CUDA caches, host configuration, credentials, and 
 Requirements:
 
 - two NVIDIA DGX Spark systems with Docker and NVIDIA Container Toolkit;
-- the same repository path and built image on both nodes;
+- the same source revision and identical built image on both nodes;
 - passwordless SSH from the head to the worker;
 - a working RoCE interface/HCA on both nodes;
 - enough local storage for the approximately 181 GiB checkpoint.
@@ -97,12 +105,16 @@ hf download LibertAIDAI/GLM-5.3-Flash-NVFP4 \
   --local-dir /models/GLM-5.3-Flash-NVFP4
 ```
 
-### 2. Build the runtime image on both nodes
+### 2. Build once and distribute the runtime image
+
+Clone the repository on both nodes. Build on the head, then replace `user@worker`
+below with the worker SSH target to distribute the exact image:
 
 ```bash
 git clone https://github.com/LimeChain/glm-5.3-flash-2xdgx-spark-vllm.git
 cd glm-5.3-flash-2xdgx-spark-vllm
 IMAGE=glm53-sm121:local ./scripts/build-image.sh
+docker image save glm53-sm121:local | ssh user@worker docker image load
 ```
 
 The build starts from the immutable ARM64 base image in [`config/versions.env`](config/versions.env), patches the exact FlashInfer sources, recompiles the SM121a AOT module, and validates the resulting runtime contract.
@@ -114,7 +126,13 @@ cp config/cluster.env.example config/cluster.env
 $EDITOR config/cluster.env
 ```
 
-Set the worker SSH target, repository/model/cache paths, fabric addresses, interface, and HCA names. Copy the completed non-secret cluster config to the same repository path on the worker.
+Set the worker SSH target, repository/model/cache paths, fabric addresses,
+interface, and HCA names. Create the corresponding config on the worker using
+that node's local model/cache paths. `REMOTE_ROOT` identifies its repository
+path. Do not overwrite worker paths with the head's paths when synchronizing
+source files. Preflight compares image identity, engine settings, and model
+metadata before either rank starts; full checkpoint byte verification is
+described in [the tuning guide](docs/tuning.md).
 
 ### 4. Preflight and start
 
@@ -159,7 +177,7 @@ Run it after each independent cold start. The harness is frozen to C1/C4/C6/C8, 
 - `max_num_seqs=12` is an admission ceiling, not a C12 throughput result. During the admission test, nine requests ran and three waited; no C12 throughput is claimed.
 - The benchmark does not establish model-quality equivalence, global speed leadership, or a matched comparison with other public recipes.
 - C1/C4/C6/C8 results bind the exact production source/profile identified in the receipt. Re-run before publishing numbers for a materially changed image or configuration.
-- The published throughput receipt predates this default-thinking launcher change. Re-run it before representing the table as a matched High-reasoning benchmark.
+- The published throughput receipt predates this default-thinking launcher change. The historical harness explicitly requests `enable_thinking=false`, which the pinned template ignores; rerunning that harness alone does not qualify High-reasoning or actual non-thinking behavior. Use the corrected template and separate quality/performance tests in `docs/tuning.md`.
 - Eager execution is the qualified profile in this release.
 
 ## Provenance and licensing

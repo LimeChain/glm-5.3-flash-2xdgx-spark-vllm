@@ -16,6 +16,8 @@ set +a
 
 printf -v remote_config_q '%q' "$REMOTE_ROOT/config/cluster.env"
 printf -v remote_rank_q '%q' "$REMOTE_ROOT/scripts/rank-tp2.sh"
+export CONFIG_FILE
+SSH=(ssh -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3)
 
 "$ROOT_DIR/scripts/preflight-tp2.sh"
 
@@ -23,16 +25,35 @@ if docker ps --format '{{.Names}}' | grep -Fxq "$CONTAINER_NAME"; then
   echo "container already running on head: $CONTAINER_NAME" >&2
   exit 10
 fi
-if ssh -o BatchMode=yes "$WORKER_SSH" "docker ps --format '{{.Names}}' | grep -Fxq '$CONTAINER_NAME'"; then
+if "${SSH[@]}" "$WORKER_SSH" "docker ps --format '{{.Names}}' | grep -Fxq '$CONTAINER_NAME'"; then
   echo "container already running on worker: $CONTAINER_NAME" >&2
   exit 11
 fi
 
 echo "Starting worker rank..."
-ssh -o BatchMode=yes "$WORKER_SSH" "CONFIG_FILE=$remote_config_q $remote_rank_q 1"
+worker_created=0
+head_created=0
+ready=0
+# Invoked by the EXIT trap below.
+# shellcheck disable=SC2329
+cleanup_failed_start() {
+  if [[ "$ready" != 1 ]]; then
+    if [[ "$head_created" == 1 ]]; then
+      docker logs --tail 200 "$CONTAINER_NAME" >&2 || true
+      docker stop --time 60 "$CONTAINER_NAME" >/dev/null || true
+    fi
+    if [[ "$worker_created" == 1 ]]; then
+      "${SSH[@]}" "$WORKER_SSH" "docker logs --tail 200 '$CONTAINER_NAME'; docker stop --time 60 '$CONTAINER_NAME'" >&2 || true
+    fi
+  fi
+}
+trap cleanup_failed_start EXIT
+worker_created=1
+"${SSH[@]}" "$WORKER_SSH" "CONFIG_FILE=$remote_config_q $remote_rank_q 1"
 sleep 8
 
 echo "Starting head rank..."
+head_created=1
 "$ROOT_DIR/scripts/rank-tp2.sh" 0
 
 start_epoch="$(date +%s)"
@@ -41,16 +62,17 @@ for _ in $(seq 1 240); do
     elapsed="$(( $(date +%s) - start_epoch ))"
     echo "GLM_READY elapsed_seconds=$elapsed endpoint=http://127.0.0.1:$API_PORT"
     curl -fsS --max-time 10 "http://127.0.0.1:$API_PORT/v1/models"
+    ready=1
     exit 0
   fi
   head_state="$(docker inspect "$CONTAINER_NAME" --format '{{.State.Running}}|{{.State.OOMKilled}}|{{.State.ExitCode}}' 2>/dev/null || echo missing)"
-  worker_state="$(ssh -o BatchMode=yes "$WORKER_SSH" "docker inspect '$CONTAINER_NAME' --format '{{.State.Running}}|{{.State.OOMKilled}}|{{.State.ExitCode}}' 2>/dev/null || echo missing")"
+  worker_state="$("${SSH[@]}" "$WORKER_SSH" "docker inspect '$CONTAINER_NAME' --format '{{.State.Running}}|{{.State.OOMKilled}}|{{.State.ExitCode}}' 2>/dev/null || echo missing")"
   if [[ "$head_state" != true\|* || "$worker_state" != true\|* ]]; then
     echo "rank failure during startup: head=$head_state worker=$worker_state" >&2
     echo "--- head logs ---" >&2
     docker logs --tail 160 "$CONTAINER_NAME" >&2 || true
     echo "--- worker logs ---" >&2
-    ssh -o BatchMode=yes "$WORKER_SSH" "docker logs --tail 160 '$CONTAINER_NAME'" >&2 || true
+    "${SSH[@]}" "$WORKER_SSH" "docker logs --tail 160 '$CONTAINER_NAME'" >&2 || true
     exit 12
   fi
   sleep 15

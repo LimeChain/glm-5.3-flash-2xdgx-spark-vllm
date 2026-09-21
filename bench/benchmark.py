@@ -24,6 +24,7 @@ PROMPT = (
 METRICS = {
     "running": "vllm:num_requests_running",
     "waiting": "vllm:num_requests_waiting",
+    "kv_cache_usage": "vllm:kv_cache_usage_perc",
     "preemptions": "vllm:num_preemptions_total",
     "request_errors": "vllm:request_success_total",
     "prompt_tokens": "vllm:prompt_tokens_total",
@@ -53,6 +54,7 @@ def metric_snapshot(base: str) -> dict[str, Any]:
     with urllib.request.urlopen(base + "/metrics", timeout=10) as response:
         text = response.read().decode("utf-8", "replace")
     out: dict[str, Any] = {key: 0.0 for key in METRICS}
+    seen: set[str] = set()
     for line in text.splitlines():
         if not line or line.startswith("#"):
             continue
@@ -68,11 +70,15 @@ def metric_snapshot(base: str) -> dict[str, Any]:
                 labels[name] = raw.strip('"')
             out["cache_config"] = labels
         for key, metric in METRICS.items():
-            if not left.startswith(metric):
+            if left.split("{", 1)[0] != metric:
                 continue
             if key == "request_errors" and 'finished_reason="error"' not in left:
                 continue
             out[key] = float(out[key]) + value
+            seen.add(key)
+    missing = {"running", "waiting", "prompt_tokens", "generation_tokens"} - seen
+    if missing:
+        raise RuntimeError(f"missing required vLLM metrics: {sorted(missing)}")
     return out
 
 
@@ -99,6 +105,7 @@ def stream_one(
     gate.wait()
     started = time.perf_counter()
     first: float | None = None
+    first_content: float | None = None
     usage: dict[str, Any] = {}
     finish_reason: str | None = None
     fingerprint: str | None = None
@@ -106,6 +113,7 @@ def stream_one(
     reasoning_chars = 0
     status: int | None = None
     error: str | None = None
+    stream_done = False
     try:
         request = urllib.request.Request(
             url,
@@ -117,9 +125,14 @@ def stream_one(
             status = response.status
             for raw in response:
                 line = raw.decode("utf-8", "replace").strip()
-                if not line.startswith("data: ") or line == "data: [DONE]":
+                if line == "data: [DONE]":
+                    stream_done = True
+                    break
+                if not line.startswith("data: "):
                     continue
                 event = json.loads(line[6:])
+                if event.get("error"):
+                    raise RuntimeError(f"server stream error: {event['error']}")
                 fingerprint = event.get("system_fingerprint") or fingerprint
                 choices = event.get("choices") or []
                 if choices:
@@ -129,6 +142,8 @@ def stream_one(
                     if first is None and (text or reasoning):
                         first = time.perf_counter()
                     if text:
+                        if first_content is None:
+                            first_content = time.perf_counter()
                         content.append(text)
                     reasoning_chars += len(reasoning)
                     finish_reason = choices[0].get("finish_reason") or finish_reason
@@ -145,6 +160,7 @@ def stream_one(
         "label": label,
         "http_status": status,
         "error": error,
+        "stream_done": stream_done,
         "started_perf": started,
         "first_perf": first,
         "ended_perf": ended,
@@ -152,12 +168,16 @@ def stream_one(
         "total_seconds": ended - started,
         "decode_seconds": decode_seconds,
         "completion_tokens": completion_tokens,
+        "prompt_tokens": usage.get("prompt_tokens"),
+        "usage": usage,
+        "time_to_first_content_seconds": None if first_content is None else first_content - started,
         "decode_tokens_per_second": (
             None if not decode_seconds else decode_tokens / decode_seconds
         ),
         "finish_reason": finish_reason,
         "system_fingerprint": fingerprint,
         "reasoning_chars": reasoning_chars,
+        "content_chars": len(output),
         "content_sha256": hashlib.sha256(output.encode()).hexdigest(),
     }
 
@@ -167,6 +187,8 @@ def run_wave(
     payload: dict[str, Any],
     concurrency: int,
     label: str,
+    poll_interval: float = 0.02,
+    per_request_payloads: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     before = metric_snapshot(base)
     gate = threading.Barrier(concurrency + 1)
@@ -174,7 +196,7 @@ def run_wave(
     url = base + "/v1/chat/completions"
     with concurrent.futures.ThreadPoolExecutor(max_workers=concurrency) as pool:
         futures = [
-            pool.submit(stream_one, url, payload, f"{label}-client-{index + 1}", gate)
+            pool.submit(stream_one, url, payload if per_request_payloads is None else per_request_payloads[index], f"{label}-client-{index + 1}", gate)
             for index in range(concurrency)
         ]
         gate.wait()
@@ -185,9 +207,10 @@ def run_wave(
                     "t_perf": time.perf_counter(),
                     "running": float(sample["running"]),
                     "waiting": float(sample["waiting"]),
+                    "kv_cache_usage": float(sample["kv_cache_usage"]),
                 }
             )
-            time.sleep(0.02)
+            time.sleep(poll_interval)
         rows = [future.result() for future in futures]
     after = metric_snapshot(base)
     valid = [row for row in rows if row["decode_tokens_per_second"] is not None]
@@ -213,6 +236,7 @@ def run_wave(
             "http_successes": sum(row["http_status"] == 200 for row in rows),
             "peak_running": max((item["running"] for item in samples), default=0.0),
             "peak_waiting": max((item["waiting"] for item in samples), default=0.0),
+            "peak_kv_cache_usage": max((item["kv_cache_usage"] for item in samples), default=0.0),
             "median_ttft_seconds": (
                 statistics.median(float(row["ttft_seconds"]) for row in valid)
                 if valid
@@ -264,7 +288,10 @@ def summarize_scenario(waves: list[dict[str, Any]], completion_tokens: int) -> d
         "peak_running": max(float(item["peak_running"]) for item in summaries),
         "peak_waiting": max(float(item["peak_waiting"]) for item in summaries),
         "acceptance_percent": None if not draft else 100.0 * accepted / draft,
-        "all_http_success": all(row["http_status"] == 200 for row in all_rows),
+        "all_http_success": all(
+            row["http_status"] == 200 and row["error"] is None and row["stream_done"]
+            for row in all_rows
+        ),
         "all_completion_tokens_exact": all(
             row["completion_tokens"] == completion_tokens for row in all_rows
         ),

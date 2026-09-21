@@ -15,7 +15,14 @@ set +a
 printf -v remote_config_q '%q' "$REMOTE_ROOT/config/cluster.env"
 printf -v remote_rank_q '%q' "$REMOTE_ROOT/scripts/rank-tp2.sh"
 
-"$ROOT_DIR/scripts/rank-tp2.sh" 0
-ssh -o BatchMode=yes "$WORKER_SSH" "test -x $remote_rank_q && test -r $remote_config_q"
-ssh -o BatchMode=yes "$WORKER_SSH" "CONFIG_FILE=$remote_config_q PREFLIGHT_ONLY=1 $remote_rank_q 1"
+head_record="$(PREFLIGHT_ONLY=1 "$ROOT_DIR/scripts/rank-tp2.sh" 0)"
+printf '%s\n' "$head_record"
+ssh -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$WORKER_SSH" "test -x $remote_rank_q && test -r $remote_config_q"
+worker_record="$(ssh -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$WORKER_SSH" "CONFIG_FILE=$remote_config_q PREFLIGHT_ONLY=1 $remote_rank_q 1")"
+printf '%s\n' "$worker_record"
+for key in image revision profile model_meta; do
+  head_value="$(printf '%s\n' "$head_record" | tr ' ' '\n' | grep "^$key=")"
+  worker_value="$(printf '%s\n' "$worker_record" | tr ' ' '\n' | grep "^$key=")"
+  [[ "$head_value" == "$worker_value" ]] || { echo "rank parity mismatch: $head_value != $worker_value" >&2; exit 3; }
+done
 echo "TP2_PREFLIGHT_OK"
