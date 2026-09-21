@@ -34,8 +34,8 @@ echo "Starting worker rank..."
 worker_created=0
 head_created=0
 ready=0
-# Invoked by the EXIT trap below.
-# shellcheck disable=SC2329
+# Invoked by the EXIT trap below; older ShellCheck versions do not trace it.
+# shellcheck disable=SC2317,SC2329
 cleanup_failed_start() {
   if [[ "$ready" != 1 ]]; then
     if [[ "$head_created" == 1 ]]; then
@@ -47,7 +47,7 @@ cleanup_failed_start() {
     fi
   fi
 }
-trap cleanup_failed_start EXIT
+trap 'cleanup_failed_start' EXIT
 worker_created=1
 "${SSH[@]}" "$WORKER_SSH" "CONFIG_FILE=$remote_config_q $remote_rank_q 1"
 sleep 8

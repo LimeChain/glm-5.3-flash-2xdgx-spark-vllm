@@ -54,6 +54,13 @@ checks arithmetic with thinking both enabled and disabled, plus an automatic
 tool call. Inspect the saved responses, and expand task-level checks for the
 intended production workload.
 
+`bench/qualify-code.py` requests a complete interval-merging function in both
+thinking modes, measures answer completion time, and checks edge cases and input
+immutability. It runs generated code in a temporary CPU-only Docker container
+with no network or host mounts, read-only storage, and resource/time limits.
+Pass `--image` with an existing local image containing Python 3. This is one
+coding smoke test, not a coding benchmark suite.
+
 ```bash
 python3 bench/qualify.py --base http://127.0.0.1:8000 \
   --output results/quality.json
