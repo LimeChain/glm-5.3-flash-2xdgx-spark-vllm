@@ -1,0 +1,31 @@
+{
+  "window_start": "2026-09-21T19:41:36.882064+00:00",
+  "window_end": "2026-09-21T20:10:38.653734+00:00",
+  "description": "Serving interval from first candidate screen to final repeated screen, including intervening quality/context checks and short idle gaps; model loading excluded. GPU utilization is busy time, not fraction of peak FLOPS.",
+  "nodes": {
+    "head": {
+      "source_receipt_sha256": "37ba815c6242039a672464440c43c8b0c5488064f068f92a41839a07bc012d73",
+      "samples": 344,
+      "first_sample": "2026-09-21T19:41:39.096856+00:00",
+      "last_sample": "2026-09-21T20:10:38.437652+00:00",
+      "gpu_busy_percent_median": 96.0,
+      "gpu_temperature_c_max": 85.0,
+      "host_available_gib_min": 8.993438720703125,
+      "swap_in_pages_delta": 9602,
+      "swap_out_pages_delta": 0,
+      "scope_note": "Swap deltas exclude model loading. Separate loaded spot checks showed no active thermal or power throttling; event counters were not continuously sampled."
+    },
+    "worker": {
+      "source_receipt_sha256": "7484a66d5ea3c849b5ead9e954cf28f6c1ce89b53154d7aa11baf3ac4171f7dd",
+      "samples": 344,
+      "first_sample": "2026-09-21T19:41:38.684377+00:00",
+      "last_sample": "2026-09-21T20:10:38.598764+00:00",
+      "gpu_busy_percent_median": 96.0,
+      "gpu_temperature_c_max": 83.0,
+      "host_available_gib_min": 10.395584106445312,
+      "swap_in_pages_delta": 15506,
+      "swap_out_pages_delta": 0,
+      "scope_note": "Swap deltas exclude model loading. Separate loaded spot checks showed no active thermal or power throttling; event counters were not continuously sampled."
+    }
+  }
+}

@@ -4,6 +4,10 @@ Run the full **GLM-5.3 Flash NVFP4** checkpoint across two NVIDIA DGX Spark syst
 
 **Measured production result:** **29.74 tok/s at C1** and **101.74 aggregate tok/s at C8**, with a configured 262,144-token context window.
 
+A separate [64K throughput tuning campaign](docs/tuning-2026-09-21.md) tests both
+RoCE links, CUDA graphs, larger cache capacity, and mixed workloads. Its results
+use a different methodology and do not replace the historical receipt below.
+
 ## Performance
 
 Two matched cold starts. Each scenario used one warm-up wave followed by three measured waves with 512 completion tokens per request. The primary number is the arithmetic mean of the two cold-run medians.
@@ -81,7 +85,7 @@ No model tensor or Hugging Face configuration field is rewritten. See [`docs/ada
 - `bench/benchmark.py` — the frozen C1/C4/C6/C8 benchmark harness.
 - `bench/tune.py` — experimental counting, coding, reasoning, and mixed-task measurements.
 - `docs/tuning.md` — hardware qualification, template correction, and tuning procedure.
-- `results/` — sanitized production benchmark receipt.
+- `results/` — sanitized historical and tuning benchmark receipts.
 
 Model weights, Docker layers, CUDA caches, host configuration, credentials, and private logs are intentionally not included.
 
@@ -171,14 +175,14 @@ python3 bench/benchmark.py \
 
 Run it after each independent cold start. The harness is frozen to C1/C4/C6/C8, one warm-up wave, three measured waves, and 512 completion tokens. Throughput excludes the first streamed token and measures active delivery time.
 
-## Validation boundaries
+## Validation boundaries of the original 262K profile
 
 - **262,144 tokens is the configured context window.** The completed long-context qualification used a 140,012-token prompt.
 - `max_num_seqs=12` is an admission ceiling, not a C12 throughput result. During the admission test, nine requests ran and three waited; no C12 throughput is claimed.
 - The benchmark does not establish model-quality equivalence, global speed leadership, or a matched comparison with other public recipes.
 - C1/C4/C6/C8 results bind the exact production source/profile identified in the receipt. Re-run before publishing numbers for a materially changed image or configuration.
 - The published throughput receipt predates this default-thinking launcher change. The historical harness explicitly requests `enable_thinking=false`, which the pinned template ignores; rerunning that harness alone does not qualify High-reasoning or actual non-thinking behavior. Use the corrected template and separate quality/performance tests in `docs/tuning.md`.
-- Eager execution is the qualified profile in this release.
+- Eager execution is the original qualified 262K profile. The separate 64K tuning campaign documents its graph configuration and validation limits.
 
 ## Provenance and licensing
 

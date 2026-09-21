@@ -1,0 +1,55 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "tokens": 1,
+      "heads": 32,
+      "max_abs_error": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "tokens": 1,
+      "heads": 64,
+      "max_abs_error": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "tokens": 2,
+      "heads": 32,
+      "max_abs_error": 0.002240478992462158,
+      "relative_l2": 0.0005410790909081697
+    },
+    {
+      "tokens": 2,
+      "heads": 64,
+      "max_abs_error": 0.0023644566535949707,
+      "relative_l2": 0.0005450602620840073
+    },
+    {
+      "tokens": 64,
+      "heads": 32,
+      "max_abs_error": 0.0022626519203186035,
+      "relative_l2": 0.0005613851244561374
+    },
+    {
+      "tokens": 64,
+      "heads": 64,
+      "max_abs_error": 0.002512216567993164,
+      "relative_l2": 0.0005635694251395762
+    },
+    {
+      "tokens": 65,
+      "heads": 32,
+      "max_abs_error": 0.0023261308670043945,
+      "relative_l2": 0.0005434786435216665
+    },
+    {
+      "tokens": 65,
+      "heads": 64,
+      "max_abs_error": 0.002567291259765625,
+      "relative_l2": 0.0005478010862134397
+    }
+  ],
+  "source_receipt_sha256": "08f9f517969dd8583778676ca4b031b547a3a7fe14a81c734ff897ab0becda55",
+  "publication_note": "Synthetic correctness or collective microbenchmark receipt; no private deployment configuration included."
+}

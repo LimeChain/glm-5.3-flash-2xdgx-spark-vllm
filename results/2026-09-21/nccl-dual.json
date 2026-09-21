@@ -1,0 +1,63 @@
+{
+  "torch": "2.13.0+cu130",
+  "nccl": [
+    2,
+    29,
+    7
+  ],
+  "hca": "rocep1s0f0,roceP2p1s0f0",
+  "rows": [
+    {
+      "bytes": 16384,
+      "median_us": 21.37250965461135,
+      "algorithm_GB_s": 0.7665922376348057,
+      "round_seconds": [
+        2.228130993898958e-05,
+        2.1250759600661696e-05,
+        2.1372509654611348e-05
+      ]
+    },
+    {
+      "bytes": 65536,
+      "median_us": 43.37926977314055,
+      "algorithm_GB_s": 1.5107677086943125,
+      "round_seconds": [
+        4.8962919972836975e-05,
+        4.337926977314055e-05,
+        4.267287964466959e-05
+      ]
+    },
+    {
+      "bytes": 1048576,
+      "median_us": 549.2816702462733,
+      "algorithm_GB_s": 1.9089950690141644,
+      "round_seconds": [
+        0.0008699302398599685,
+        0.0005088079802226275,
+        0.0005492816702462733
+      ]
+    },
+    {
+      "bytes": 16777216,
+      "median_us": 806.3542901072651,
+      "algorithm_GB_s": 20.806258744860415,
+      "round_seconds": [
+        0.0008397600200260058,
+        0.0008005095197586343,
+        0.0008063542901072652
+      ]
+    },
+    {
+      "bytes": 67108864,
+      "median_us": 3317.679659812711,
+      "algorithm_GB_s": 20.22765031021362,
+      "round_seconds": [
+        0.003341628000489436,
+        0.003317679659812711,
+        0.0033137446496402847
+      ]
+    }
+  ],
+  "source_receipt_sha256": "931865d05924a53fcf37bb36446e7795ce6bc3290dc5843e8b35206da165724c",
+  "publication_note": "Synthetic correctness or collective microbenchmark receipt; no private deployment configuration included."
+}

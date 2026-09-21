@@ -62,6 +62,7 @@ def main():
     manifest = json.loads(args.manifest.read_text())
     receipt = {"schema": "glm53-tuning.v1", "label": args.label, "started": utc_now(), "model": models[0], "manifest": manifest, "arguments": {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}, "scenarios": {}, "pass": True}
     receipt["harness_sha256"] = {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ("tune.py", "benchmark.py")}
+    receipt["cache_config"] = opening.get("cache_config")
     document = "".join(f"Record {i}: warehouse shipment reference alpha; verify quantities and delivery dates.\n" for i in range(args.prompt_repeat))
     for workload in args.workloads:
         for concurrency in args.concurrencies:
