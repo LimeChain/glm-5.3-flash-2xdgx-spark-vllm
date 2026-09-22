@@ -1,10 +1,19 @@
 # Controlled MTP-depth comparison
 
+The completed campaign and its failed cases are documented in the
+[2026-09-22 hardware results](mtp-results-2026-09-22.md).
+
 This experiment compares zero, one, two and three speculative draft tokens on
 the measured 64K graph profile. Keep the checkpoint, image, chat template,
 network settings, CPU availability, memory fraction, graph configuration,
 batch-token budget and maximum sequence count fixed. Realized cache and graph
 allocations can still change with MTP depth and must be recorded.
+
+The fixed settings come from the [64K measured profile](tuning-2026-09-21.md#reproduce-the-candidate),
+including graph capture sizes `[4,8,16,24,32,48,64]`. The experiment tests
+changing MTP depth in that profile. It does not optimize the capture grid or
+other engine settings independently for each depth, and cannot establish the
+best achievable performance of every depth.
 
 Use a fresh model start for each candidate, verify the effective speculative
 configuration on both ranks, and retain every failure. The initial campaign
@@ -12,6 +21,9 @@ order is MTP2, MTP1, MTP0, then MTP3, ending on the existing control. Preliminar
 harness smoke checks on the already-running MTP3 service are separate from the
 fresh-start comparison. This order is not randomized and one start per profile
 does not establish cold-start variance.
+The model processes restart, while the existing per-node compiled-kernel and
+autotune caches are retained. This is not a comparison from empty compilation
+caches.
 
 ## Complete-answer measurements
 

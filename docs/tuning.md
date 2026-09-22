@@ -141,7 +141,9 @@ restarts and reject speedups accompanied by corrupted or missing outputs.
 ## Useful comparison order
 
 1. Eager baseline with a validated fabric.
-2. MTP depth 0/2/3 at otherwise matching settings.
+2. MTP depth 0/1/2/3 at otherwise matching settings; see the
+   [controlled comparison protocol](mtp-comparison.md) for complete-answer checks
+   and selection criteria.
 3. Supported CUDA-graph modes, checking memory and hybrid-state compatibility.
 4. Batched-token budgets and concurrency admission ceilings.
 5. Longer prompts and mixed traffic, followed by repeated finalist runs.

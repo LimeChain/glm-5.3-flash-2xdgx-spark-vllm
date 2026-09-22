@@ -1,0 +1,20 @@
+{
+  "mtp_depth": 0,
+  "verified": "2026-09-22T09:51:59.098572+00:00",
+  "nodes": {
+    "head": {
+      "image": "sha256:36eefbfd9f1470c09c3cff70de5cbfbd5d40b6fdda0f018e7298cdeb5cafffa1",
+      "started": "2026-09-22T09:37:49.58014242Z",
+      "restart_count": 0,
+      "speculative_config": null
+    },
+    "worker": {
+      "image": "sha256:36eefbfd9f1470c09c3cff70de5cbfbd5d40b6fdda0f018e7298cdeb5cafffa1",
+      "started": "2026-09-22T09:37:38.447891498Z",
+      "restart_count": 0,
+      "speculative_config": null
+    }
+  },
+  "source_receipt_sha256": "7cf05a1942ccf7df60bfd94c81d1d3591e6ebebd8d4b4d00f4de8a4989f15e13",
+  "publication_note": "Synthetic task/performance measurements. Deployment addresses, host names, user paths and local CLI paths omitted. Source receipt hash identifies the preserved private original."
+}
