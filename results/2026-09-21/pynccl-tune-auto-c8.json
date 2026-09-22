@@ -1,0 +1,109 @@
+{
+  "torch": "2.13.0+cu130",
+  "nccl": "2.30.7",
+  "backend": "pynccl",
+  "dtype": "bfloat16",
+  "hca": "rocep1s0f0,roceP2p1s0f0",
+  "protocol": null,
+  "channels": "8",
+  "rows": [
+    {
+      "bytes": 16384,
+      "median_us": 26.25251014251262,
+      "algorithm_GB_s": 0.6240927024143182,
+      "round_seconds": [
+        2.625251014251262e-05,
+        2.2120529902167618e-05,
+        2.6401469949632882e-05
+      ],
+      "graph_median_us": 39.11292995326221,
+      "graph_algorithm_GB_s": 0.4188896106627137
+    },
+    {
+      "bytes": 65536,
+      "median_us": 50.840069889090955,
+      "algorithm_GB_s": 1.2890619572901578,
+      "round_seconds": [
+        7.378188020084054e-05,
+        5.0840069889090955e-05,
+        4.474346002098173e-05
+      ],
+      "graph_median_us": 60.98578043747693,
+      "graph_algorithm_GB_s": 1.0746111557461822
+    },
+    {
+      "bytes": 131072,
+      "median_us": 54.69333031214774,
+      "algorithm_GB_s": 2.39648964968747,
+      "round_seconds": [
+        4.9955440335907045e-05,
+        7.350508007220923e-05,
+        5.469333031214774e-05
+      ],
+      "graph_median_us": 68.97885992657393,
+      "graph_algorithm_GB_s": 1.900176374899824
+    },
+    {
+      "bytes": 262144,
+      "median_us": 61.963379848748446,
+      "algorithm_GB_s": 4.230627842443214,
+      "round_seconds": [
+        6.196337984874845e-05,
+        5.940627015661448e-05,
+        6.82259100722149e-05
+      ],
+      "graph_median_us": 76.78235007915646,
+      "graph_algorithm_GB_s": 3.4141179545787605
+    },
+    {
+      "bytes": 524288,
+      "median_us": 114.14024047553539,
+      "algorithm_GB_s": 4.593366877585779,
+      "round_seconds": [
+        0.00011414024047553539,
+        0.0001150810404215008,
+        0.00011360505013726651
+      ],
+      "graph_median_us": 125.89187012054025,
+      "graph_algorithm_GB_s": 4.164589814242963
+    },
+    {
+      "bytes": 1048576,
+      "median_us": 147.32137031387538,
+      "algorithm_GB_s": 7.117609602503409,
+      "round_seconds": [
+        0.0001734655600739643,
+        0.00014732137031387538,
+        0.000142231629579328
+      ],
+      "graph_median_us": 172.58045030757785,
+      "graph_algorithm_GB_s": 6.075867794592015
+    },
+    {
+      "bytes": 16777216,
+      "median_us": 826.1947002029046,
+      "algorithm_GB_s": 20.306612951982984,
+      "round_seconds": [
+        0.0008247848000610248,
+        0.0008415520697599277,
+        0.0008261947002029046
+      ],
+      "graph_median_us": 872.470960021019,
+      "graph_algorithm_GB_s": 19.229540888783067
+    },
+    {
+      "bytes": 67108864,
+      "median_us": 3606.692239991389,
+      "algorithm_GB_s": 18.606761967625,
+      "round_seconds": [
+        0.003586651210207492,
+        0.0036141973204212264,
+        0.003606692239991389
+      ],
+      "graph_median_us": 3595.1863700756803,
+      "graph_algorithm_GB_s": 18.666310197039195
+    }
+  ],
+  "source_receipt_sha256": "411c1543b590baf9d37977bec13ef9dd0c6edb37e10977c96359de9bc2840b32",
+  "publication_note": "Synthetic correctness or collective microbenchmark receipt; no private deployment configuration included."
+}

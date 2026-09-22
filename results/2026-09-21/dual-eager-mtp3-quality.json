@@ -1,0 +1,237 @@
+{
+  "pass": false,
+  "results": [
+    {
+      "name": "multiply-17-23-thinking-False",
+      "pass": false,
+      "elapsed_s": 2.241806446982082,
+      "response": {
+        "id": "chatcmpl-b6cf952f6cd22262",
+        "object": "chat.completion",
+        "created": 1790017366,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "17 \u00d7 23 = 391391",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-14d2d8b7",
+        "usage": {
+          "prompt_tokens": 30,
+          "total_tokens": 42,
+          "completion_tokens": 12,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "multiply-29-31-thinking-False",
+      "pass": false,
+      "elapsed_s": 0.9859026740305126,
+      "response": {
+        "id": "chatcmpl-bd1c6fb21015a1b6",
+        "object": "chat.completion",
+        "created": 1790017369,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "29 \u00d7 31 = 29 \u00d7 30 + 29 = 870 + 29 = 899899",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-14d2d8b7",
+        "usage": {
+          "prompt_tokens": 30,
+          "total_tokens": 58,
+          "completion_tokens": 28,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "multiply-17-23-thinking-True",
+      "pass": true,
+      "elapsed_s": 0.6844521659659222,
+      "response": {
+        "id": "chatcmpl-9ac750da6835749f",
+        "object": "chat.completion",
+        "created": 1790017370,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "391",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "17 \u00d7 23 = 391"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-14d2d8b7",
+        "usage": {
+          "prompt_tokens": 30,
+          "total_tokens": 42,
+          "completion_tokens": 12,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "multiply-29-31-thinking-True",
+      "pass": true,
+      "elapsed_s": 0.9874211740097962,
+      "response": {
+        "id": "chatcmpl-af05d86e74f3f41e",
+        "object": "chat.completion",
+        "created": 1790017370,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "899",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "29 \u00d7 31 = 29 \u00d7 30 + 29 = 870 + 29 = 899"
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-14d2d8b7",
+        "usage": {
+          "prompt_tokens": 30,
+          "total_tokens": 58,
+          "completion_tokens": 28,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "tool-call",
+      "pass": true,
+      "elapsed_s": 7.803059446043335,
+      "response": {
+        "id": "chatcmpl-84f63e87f3c4f12d",
+        "object": "chat.completion",
+        "created": 1790017371,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": null,
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": [
+                {
+                  "id": "chatcmpl-tool-86417a84f0338bad",
+                  "type": "function",
+                  "function": {
+                    "name": "multiply",
+                    "arguments": "{\"a\": 17, \"b\": 23}"
+                  }
+                }
+              ],
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "tool_calls",
+            "stop_reason": 154829,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-14d2d8b7",
+        "usage": {
+          "prompt_tokens": 180,
+          "total_tokens": 197,
+          "completion_tokens": 17,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  ],
+  "source_receipt_sha256": "6727ee63e12431f75e7fe7523065f059b483dc99b6dfa4ab4da25c6931d86c80",
+  "publication_note": "Synthetic correctness or collective microbenchmark receipt; no private deployment configuration included."
+}

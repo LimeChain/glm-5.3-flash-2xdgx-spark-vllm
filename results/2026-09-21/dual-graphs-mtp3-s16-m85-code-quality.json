@@ -1,0 +1,102 @@
+{
+  "model": "glm-5.3-flash-nvfp4-sm121",
+  "pass": true,
+  "results": [
+    {
+      "thinking": false,
+      "answer_seconds": 3.9770655250176787,
+      "response": {
+        "id": "chatcmpl-84659c928b24d8d9",
+        "object": "chat.completion",
+        "created": 1790020519,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef merge_intervals(intervals):\n    intervals = list(intervals)\n    cleaned = []\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n        if start != end:\n            cleaned.append((start, end))\n    cleaned.sort()\n    merged = []\n    for start, end in cleaned:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n    return merged\n```",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-b9b8e972",
+        "usage": {
+          "prompt_tokens": 93,
+          "total_tokens": 223,
+          "completion_tokens": 130,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "pass": true,
+      "test_exit": 0,
+      "test_stdout": "CODE_QUALIFICATION_OK\n",
+      "test_stderr": ""
+    },
+    {
+      "thinking": true,
+      "answer_seconds": 6.2624087650328875,
+      "response": {
+        "id": "chatcmpl-90820abee9e20cce",
+        "object": "chat.completion",
+        "created": 1790020524,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start is greater than end\")\n    non_empty = sorted((s, e) for s, e in intervals if s < e)\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n    return merged\n```",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": "Half-open intervals: (a, b) with a < b non-empty. Touching: (1,2) and (2,3) merge to (1,3). Empty intervals: start == end, discard. Raise ValueError if start > end. Sort by start, merge when next_start <= current_end."
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-b9b8e972",
+        "usage": {
+          "prompt_tokens": 92,
+          "total_tokens": 279,
+          "completion_tokens": 187,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      },
+      "pass": true,
+      "test_exit": 0,
+      "test_stdout": "CODE_QUALIFICATION_OK\n",
+      "test_stderr": ""
+    }
+  ],
+  "source_receipt_sha256": "ea8f67c01083b6cbf4f90ef5fcb08b2be24b7895e4f95f77d1bde86834b46c8a",
+  "publication_note": "Synthetic correctness or collective microbenchmark receipt; no private deployment configuration included."
+}
