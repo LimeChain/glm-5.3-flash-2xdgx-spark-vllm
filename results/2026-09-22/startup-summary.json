@@ -1,0 +1,98 @@
+{
+  "2": {
+    "head": {
+      "source_log_sha256": "233211ded6e89a1fd0f774b65c7a4bae2a611847e80d2dff71e55dd435dd9af4",
+      "available_kv_cache_gib": 6.5,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.22,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    },
+    "worker": {
+      "source_log_sha256": "728ebf93d60a2e89a1543bce3f215fb1ad6c527b597f7471ce69f1d3bf2a128f",
+      "available_kv_cache_gib": 6.64,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.25,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    }
+  },
+  "1": {
+    "head": {
+      "source_log_sha256": "c7964421666729c0f16f2704c6993067063645d2b4cb35345a9e6737c7933728",
+      "available_kv_cache_gib": 7.45,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.18,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    },
+    "worker": {
+      "source_log_sha256": "45fe5d1e0fdd41ef5a2e948e0b0924c7abc35aa77fccac59f774c91615e5d846",
+      "available_kv_cache_gib": 5.72,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.19,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    }
+  },
+  "0": {
+    "head": {
+      "source_log_sha256": "2ec0a83fd31f006771e22c3fd0f841a0b8d93da95635db79b22ab5cb509a9967",
+      "available_kv_cache_gib": 8.89,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.1,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    },
+    "worker": {
+      "source_log_sha256": "8044e8ea4838a6156e986b6c61e650737b5b4dae2a6348444cbfa09ece9a5a57",
+      "available_kv_cache_gib": 8.47,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.1,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    }
+  },
+  "3": {
+    "head": {
+      "source_log_sha256": "706e304f739b78fb5bb45905ca92ac117ba691fbb6a3f9c2571c7ed8369a1251",
+      "available_kv_cache_gib": 6.34,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.22,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    },
+    "worker": {
+      "source_log_sha256": "4986bfb70cf41415d6eaccff4ed9f312269dbcf1df7d2316afcc9bbc6e9e65ed",
+      "available_kv_cache_gib": 6.49,
+      "graph_capture_seconds": 2,
+      "graph_storage_gib": 0.25,
+      "error_lines": [],
+      "both_roce_hcas_selected": true,
+      "nccl_versions_logged": [
+        "2.30.7+cuda13.3"
+      ]
+    }
+  }
+}

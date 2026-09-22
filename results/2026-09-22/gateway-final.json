@@ -1,0 +1,35 @@
+{
+  "started": "2026-09-22T10:40:36.530714+00:00",
+  "finished": "2026-09-22T10:40:38.685285+00:00",
+  "complete": true,
+  "pass": true,
+  "transport": "system curl with normal certificate verification",
+  "checks": [
+    {
+      "name": "models",
+      "pass": true,
+      "elapsed_s": 0.2555694580078125
+    },
+    {
+      "name": "chat-nonthinking",
+      "pass": true,
+      "content": "391",
+      "reasoning_present": false,
+      "elapsed_s": 0.37092733301687986
+    },
+    {
+      "name": "chat-default-high",
+      "pass": true,
+      "content": "391",
+      "reasoning_present": true,
+      "elapsed_s": 0.7087305840104818
+    },
+    {
+      "name": "responses-basic",
+      "pass": true,
+      "content": "391",
+      "elapsed_s": 0.8144138340139762
+    }
+  ],
+  "source_receipt_sha256": "45e25303fdf2960f9963e34ef491057bbc4863a9280c695ff00eef25332165a7"
+}

@@ -1,0 +1,357 @@
+{
+  "note": "Five-second host telemetry. Intervals begin at fresh-runtime verification and end at the throughput receipt finish; model loading excluded. GPU busy percentage is not percentage of peak FLOPS. No continuous clock-throttle-reason sampling.",
+  "profiles": {
+    "0": {
+      "start": "2026-09-22T09:51:59.098572+00:00",
+      "end": "2026-09-22T10:11:59.352579+00:00",
+      "nodes": {
+        "head": {
+          "source_receipt_sha256": "9a26c73fa1355d7e9c646903d0a24f5728d13906c964cc3284f3b347d2d6ee41",
+          "sample_count": 237,
+          "first_sample": "2026-09-22T09:52:02.595170+00:00",
+          "last_sample": "2026-09-22T10:11:57.763568+00:00",
+          "maximum_sample_gap_seconds": 5.085077,
+          "minimum_available_gib": 6.639533996582031,
+          "swap_used_gib_start": 4.059329986572266,
+          "swap_used_gib_end": 4.043266296386719,
+          "vm_counter_deltas": {
+            "pswpin": 10536,
+            "pswpout": 0,
+            "pgmajfault": 9877
+          },
+          "gpu_busy_percent": {
+            "samples": 237,
+            "min": 0.0,
+            "median": 96.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 237,
+            "min": 54.0,
+            "median": 71.0,
+            "max": 83.0
+          },
+          "power_watts": {
+            "samples": 237,
+            "min": 12.88,
+            "median": 39.46,
+            "max": 75.66
+          },
+          "sm_clock_mhz": {
+            "samples": 237,
+            "min": 2398.0,
+            "median": 2457.0,
+            "max": 2476.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        },
+        "worker": {
+          "source_receipt_sha256": "3dceda753f2398e707e810ffe88f1ca0ffaa9c645e484c14c1267dd8d60b90b8",
+          "sample_count": 237,
+          "first_sample": "2026-09-22T09:52:02.837816+00:00",
+          "last_sample": "2026-09-22T10:11:58.049443+00:00",
+          "maximum_sample_gap_seconds": 5.108734,
+          "minimum_available_gib": 10.620342254638672,
+          "swap_used_gib_start": 4.667644500732422,
+          "swap_used_gib_end": 4.649616241455078,
+          "vm_counter_deltas": {
+            "pswpin": 12930,
+            "pswpout": 0,
+            "pgmajfault": 9711
+          },
+          "gpu_busy_percent": {
+            "samples": 237,
+            "min": 0.0,
+            "median": 96.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 237,
+            "min": 53.0,
+            "median": 71.0,
+            "max": 83.0
+          },
+          "power_watts": {
+            "samples": 237,
+            "min": 13.02,
+            "median": 38.92,
+            "max": 74.1
+          },
+          "sm_clock_mhz": {
+            "samples": 237,
+            "min": 2398.0,
+            "median": 2476.0,
+            "max": 2502.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        }
+      }
+    },
+    "1": {
+      "start": "2026-09-22T09:22:55.476989+00:00",
+      "end": "2026-09-22T09:37:01.034004+00:00",
+      "nodes": {
+        "head": {
+          "source_receipt_sha256": "9a26c73fa1355d7e9c646903d0a24f5728d13906c964cc3284f3b347d2d6ee41",
+          "sample_count": 167,
+          "first_sample": "2026-09-22T09:22:55.778285+00:00",
+          "last_sample": "2026-09-22T09:36:56.794747+00:00",
+          "maximum_sample_gap_seconds": 5.105656,
+          "minimum_available_gib": 7.71417236328125,
+          "swap_used_gib_start": 4.051918029785156,
+          "swap_used_gib_end": 4.036491394042969,
+          "vm_counter_deltas": {
+            "pswpin": 10661,
+            "pswpout": 0,
+            "pgmajfault": 9135
+          },
+          "gpu_busy_percent": {
+            "samples": 167,
+            "min": 0.0,
+            "median": 96.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 167,
+            "min": 52.0,
+            "median": 72.0,
+            "max": 84.0
+          },
+          "power_watts": {
+            "samples": 167,
+            "min": 12.88,
+            "median": 39.56,
+            "max": 76.53
+          },
+          "sm_clock_mhz": {
+            "samples": 167,
+            "min": 2392.0,
+            "median": 2437.0,
+            "max": 2476.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        },
+        "worker": {
+          "source_receipt_sha256": "3dceda753f2398e707e810ffe88f1ca0ffaa9c645e484c14c1267dd8d60b90b8",
+          "sample_count": 167,
+          "first_sample": "2026-09-22T09:22:56.392371+00:00",
+          "last_sample": "2026-09-22T09:36:57.383934+00:00",
+          "maximum_sample_gap_seconds": 5.092281,
+          "minimum_available_gib": 10.722293853759766,
+          "swap_used_gib_start": 4.785987854003906,
+          "swap_used_gib_end": 4.774711608886719,
+          "vm_counter_deltas": {
+            "pswpin": 8256,
+            "pswpout": 0,
+            "pgmajfault": 5933
+          },
+          "gpu_busy_percent": {
+            "samples": 167,
+            "min": 0.0,
+            "median": 95.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 167,
+            "min": 53.0,
+            "median": 70.0,
+            "max": 82.0
+          },
+          "power_watts": {
+            "samples": 167,
+            "min": 13.08,
+            "median": 38.58,
+            "max": 74.14
+          },
+          "sm_clock_mhz": {
+            "samples": 167,
+            "min": 2398.0,
+            "median": 2470.0,
+            "max": 2502.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        }
+      }
+    },
+    "2": {
+      "start": "2026-09-22T08:54:50.666533+00:00",
+      "end": "2026-09-22T09:07:18.931175+00:00",
+      "nodes": {
+        "head": {
+          "source_receipt_sha256": "9a26c73fa1355d7e9c646903d0a24f5728d13906c964cc3284f3b347d2d6ee41",
+          "sample_count": 147,
+          "first_sample": "2026-09-22T08:54:55.108965+00:00",
+          "last_sample": "2026-09-22T09:07:14.772756+00:00",
+          "maximum_sample_gap_seconds": 5.126653,
+          "minimum_available_gib": 8.082466125488281,
+          "swap_used_gib_start": 4.115058898925781,
+          "swap_used_gib_end": 4.0974578857421875,
+          "vm_counter_deltas": {
+            "pswpin": 10332,
+            "pswpout": 0,
+            "pgmajfault": 8773
+          },
+          "gpu_busy_percent": {
+            "samples": 147,
+            "min": 0.0,
+            "median": 96.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 147,
+            "min": 53.0,
+            "median": 72.0,
+            "max": 84.0
+          },
+          "power_watts": {
+            "samples": 147,
+            "min": 16.01,
+            "median": 40.72,
+            "max": 76.64
+          },
+          "sm_clock_mhz": {
+            "samples": 147,
+            "min": 2398.0,
+            "median": 2437.0,
+            "max": 2476.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        },
+        "worker": {
+          "source_receipt_sha256": "3dceda753f2398e707e810ffe88f1ca0ffaa9c645e484c14c1267dd8d60b90b8",
+          "sample_count": 148,
+          "first_sample": "2026-09-22T08:54:51.018682+00:00",
+          "last_sample": "2026-09-22T09:07:15.666748+00:00",
+          "maximum_sample_gap_seconds": 5.120423,
+          "minimum_available_gib": 9.998565673828125,
+          "swap_used_gib_start": 5.042675018310547,
+          "swap_used_gib_end": 5.0324249267578125,
+          "vm_counter_deltas": {
+            "pswpin": 7554,
+            "pswpout": 0,
+            "pgmajfault": 5897
+          },
+          "gpu_busy_percent": {
+            "samples": 148,
+            "min": 0.0,
+            "median": 95.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 148,
+            "min": 50.0,
+            "median": 70.0,
+            "max": 82.0
+          },
+          "power_watts": {
+            "samples": 148,
+            "min": 12.89,
+            "median": 39.63,
+            "max": 73.97
+          },
+          "sm_clock_mhz": {
+            "samples": 148,
+            "min": 2405.0,
+            "median": 2470.0,
+            "max": 2496.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        }
+      }
+    },
+    "3": {
+      "start": "2026-09-22T10:27:46.505400+00:00",
+      "end": "2026-09-22T10:39:31.743759+00:00",
+      "nodes": {
+        "head": {
+          "source_receipt_sha256": "9a26c73fa1355d7e9c646903d0a24f5728d13906c964cc3284f3b347d2d6ee41",
+          "sample_count": 139,
+          "first_sample": "2026-09-22T10:27:48.693664+00:00",
+          "last_sample": "2026-09-22T10:39:27.694202+00:00",
+          "maximum_sample_gap_seconds": 5.096227,
+          "minimum_available_gib": 5.619144439697266,
+          "swap_used_gib_start": 4.210086822509766,
+          "swap_used_gib_end": 4.196804046630859,
+          "vm_counter_deltas": {
+            "pswpin": 13290,
+            "pswpout": 4034,
+            "pgmajfault": 12423
+          },
+          "gpu_busy_percent": {
+            "samples": 139,
+            "min": 0.0,
+            "median": 95.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 139,
+            "min": 53.0,
+            "median": 73.0,
+            "max": 82.0
+          },
+          "power_watts": {
+            "samples": 139,
+            "min": 12.53,
+            "median": 43.14,
+            "max": 75.96
+          },
+          "sm_clock_mhz": {
+            "samples": 139,
+            "min": 2392.0,
+            "median": 2431.0,
+            "max": 2470.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 15.7578125
+        },
+        "worker": {
+          "source_receipt_sha256": "3dceda753f2398e707e810ffe88f1ca0ffaa9c645e484c14c1267dd8d60b90b8",
+          "sample_count": 139,
+          "first_sample": "2026-09-22T10:27:48.785062+00:00",
+          "last_sample": "2026-09-22T10:39:27.817964+00:00",
+          "maximum_sample_gap_seconds": 5.102442,
+          "minimum_available_gib": 10.201065063476562,
+          "swap_used_gib_start": 5.052890777587891,
+          "swap_used_gib_end": 5.04254150390625,
+          "vm_counter_deltas": {
+            "pswpin": 7032,
+            "pswpout": 0,
+            "pgmajfault": 5044
+          },
+          "gpu_busy_percent": {
+            "samples": 139,
+            "min": 0.0,
+            "median": 95.0,
+            "max": 96.0
+          },
+          "temperature_c": {
+            "samples": 139,
+            "min": 53.0,
+            "median": 72.0,
+            "max": 84.0
+          },
+          "power_watts": {
+            "samples": 139,
+            "min": 13.0,
+            "median": 42.26,
+            "max": 74.75
+          },
+          "sm_clock_mhz": {
+            "samples": 139,
+            "min": 2398.0,
+            "median": 2450.0,
+            "max": 2496.0
+          },
+          "page_size_bytes": 4096,
+          "swap_out_mib": 0.0
+        }
+      }
+    }
+  }
+}

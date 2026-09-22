@@ -1,0 +1,111 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "name": "retrieval-8192",
+      "pass": true,
+      "elapsed_s": 5.227701993018854,
+      "raw_prompt_tokens": 8074,
+      "response": {
+        "id": "chatcmpl-89f0a50e596a6933",
+        "object": "chat.completion",
+        "created": 1790069488,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "PINE-4729 LIME-8136",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-b9b8e972",
+        "usage": {
+          "prompt_tokens": 8087,
+          "total_tokens": 8100,
+          "completion_tokens": 13,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "retrieval-32768",
+      "pass": true,
+      "elapsed_s": 18.645642644027248,
+      "raw_prompt_tokens": 32647,
+      "response": {
+        "id": "chatcmpl-b6bdb69010fcdf6c",
+        "object": "chat.completion",
+        "created": 1790069494,
+        "model": "glm-5.3-flash-nvfp4-sm121",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "PINE-4729 LIME-8136",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": 154827,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.1.dev20051+g487ecf187-tp2-b9b8e972",
+        "usage": {
+          "prompt_tokens": 32660,
+          "total_tokens": 32673,
+          "completion_tokens": 13,
+          "prompt_tokens_details": null
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    {
+      "name": "streamed-high-reasoning",
+      "content": "391",
+      "reasoning": "17 \u00d7 23 = 391",
+      "done": true,
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 30,
+        "total_tokens": 42,
+        "completion_tokens": 12
+      },
+      "pass": true,
+      "elapsed_s": 0.8221274180104956
+    }
+  ],
+  "source_receipt_sha256": "4b411a5b490569490efcdef1d6e7141574ab30b7e1c47b7d80f780087f943cc6",
+  "publication_note": "Synthetic task/performance measurements. Deployment addresses, host names, user paths and local CLI paths omitted. Source receipt hash identifies the preserved private original."
+}

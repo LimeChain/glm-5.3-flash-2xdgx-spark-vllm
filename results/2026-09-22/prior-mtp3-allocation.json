@@ -1,0 +1,12 @@
+{
+  "head": {
+    "source_log_sha256": "eb0c545ca4b9bda02ed1e16140f5a8e40bf2550881c91153ca09b358d0dd4fdf",
+    "available_kv_cache_gib": 7.43,
+    "graph_storage_gib": 0.25
+  },
+  "worker": {
+    "source_log_sha256": "a7e0effd5ec9fc460bcc713883fa3a2b12542f4d3ab58c0a635a1fac7718ceb5",
+    "available_kv_cache_gib": 6.28,
+    "graph_storage_gib": 0.22
+  }
+}

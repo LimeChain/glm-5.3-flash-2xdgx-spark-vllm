@@ -1,0 +1,64 @@
+{
+  "verified": "2026-09-22T10:40:49.809379+00:00",
+  "selected_mtp_depth": 3,
+  "pass": true,
+  "nodes": {
+    "head": {
+      "image": "sha256:36eefbfd9f1470c09c3cff70de5cbfbd5d40b6fdda0f018e7298cdeb5cafffa1",
+      "running": true,
+      "oom_killed": false,
+      "restart_count": 0,
+      "started": "2026-09-22T10:12:49.021464708Z",
+      "restart_policy": "no",
+      "speculative_config": {
+        "method": "mtp",
+        "num_speculative_tokens": 3
+      },
+      "configuration": {
+        "tensor-parallel-size": "2",
+        "max-model-len": "65536",
+        "max-num-seqs": "16",
+        "max-num-batched-tokens": "8192",
+        "gpu-memory-utilization": "0.85",
+        "attention-backend": "FLASHINFER_MLA_SPARSE_SM120",
+        "kv-cache-dtype": "fp8_ds_mla",
+        "moe-backend": "marlin",
+        "default-chat-template-kwargs": "{\"enable_thinking\":true,\"reasoning_effort\":\"high\"}",
+        "compilation-config": "{\"mode\":0,\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[4,8,16,24,32,48,64]}"
+      },
+      "pass": true
+    },
+    "worker": {
+      "image": "sha256:36eefbfd9f1470c09c3cff70de5cbfbd5d40b6fdda0f018e7298cdeb5cafffa1",
+      "running": true,
+      "oom_killed": false,
+      "restart_count": 0,
+      "started": "2026-09-22T10:12:37.7858233Z",
+      "restart_policy": "no",
+      "speculative_config": {
+        "method": "mtp",
+        "num_speculative_tokens": 3
+      },
+      "configuration": {
+        "tensor-parallel-size": "2",
+        "max-model-len": "65536",
+        "max-num-seqs": "16",
+        "max-num-batched-tokens": "8192",
+        "gpu-memory-utilization": "0.85",
+        "attention-backend": "FLASHINFER_MLA_SPARSE_SM120",
+        "kv-cache-dtype": "fp8_ds_mla",
+        "moe-backend": "marlin",
+        "default-chat-template-kwargs": "{\"enable_thinking\":true,\"reasoning_effort\":\"high\"}",
+        "compilation-config": "{\"mode\":0,\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[4,8,16,24,32,48,64]}"
+      },
+      "pass": true
+    }
+  },
+  "health_status": 200,
+  "serving_metrics": {
+    "num_requests_running": 0.0,
+    "num_requests_waiting": 0.0,
+    "num_preemptions_total": 0.0
+  },
+  "source_receipt_sha256": "0c608030d19119031e1195246e0addee6fd95cfbe700c1b44d14176fa74a99d4"
+}

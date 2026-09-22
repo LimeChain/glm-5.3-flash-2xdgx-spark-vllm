@@ -1,0 +1,970 @@
+{
+  "schema": "glm53-task-latency.v1",
+  "started": "2026-09-22T08:55:00.277921+00:00",
+  "finished": "2026-09-22T09:01:53.710576+00:00",
+  "updated": "2026-09-22T09:01:53.710582+00:00",
+  "complete": true,
+  "pass": true,
+  "harness_sha256": "6c2272c165d01520d87f3f538c1423c186c137f075719ed970b9d4ee2202c4f0",
+  "cache_config": {
+    "_block_size_resolved": "True",
+    "block_size": "3584",
+    "cache_dtype": "fp8_ds_mla",
+    "enable_prefix_caching": "True",
+    "engine": "0",
+    "gpu_memory_utilization": "0.85",
+    "is_attention_free": "False",
+    "kv_cache_dtype_skip_layers": "[]",
+    "kv_cache_max_concurrency": "7.34375",
+    "kv_cache_memory_bytes": "None",
+    "kv_cache_size_tokens": "481280",
+    "kv_offloading_backend": "native",
+    "kv_offloading_size": "None",
+    "kv_sharing_fast_prefill": "False",
+    "mamba_block_size": "256",
+    "mamba_cache_dtype": "auto",
+    "mamba_cache_mode": "align",
+    "mamba_page_size_padded": "None",
+    "mamba_ssm_cache_dtype": "auto",
+    "num_cpu_blocks": "None",
+    "num_gpu_blocks": "235",
+    "num_gpu_blocks_override": "None",
+    "prefix_caching_hash_algo": "sha256",
+    "prefix_match_unit": "None",
+    "replayssm_buffer_len": "16",
+    "skip_page_size_padded": "None",
+    "sliding_window": "None",
+    "use_replayssm": "False",
+    "user_specified_block_size": "True",
+    "user_specified_mamba_block_size": "False"
+  },
+  "cases": {
+    "interval-off": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 6.385650162992533,
+      "median_ttft_seconds": 0.3449457309907302,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:55:00.279422+00:00",
+          "content": "def merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(s, e) for s, e in intervals if s < e]\n    if not non_empty:\n        return []\n\n    non_empty.sort(key=lambda x: (x[0], x[1]))\n\n    merged = [non_empty[0]]\n    for start, end in non_empty[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 100,
+            "total_tokens": 250,
+            "completion_tokens": 150
+          },
+          "ttft_seconds": 5.164390048012137,
+          "first_content_seconds": 5.164390048012137,
+          "error": null,
+          "answer_seconds": 11.04118274699431,
+          "payload_sha256": "d3caba86c9b4755822d7e7f38e06d00e05a6e2290b2c512fb67c2ea1529cac00",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T08:55:11.906599+00:00",
+          "content": "def merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(s, e) for s, e in intervals if s < e]\n    if not non_empty:\n        return []\n\n    non_empty.sort(key=lambda x: (x[0], x[1]))\n\n    merged = [non_empty[0]]\n    for start, end in non_empty[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 100,
+            "total_tokens": 250,
+            "completion_tokens": 150
+          },
+          "ttft_seconds": 0.3588118510087952,
+          "first_content_seconds": 0.3588118510087952,
+          "error": null,
+          "answer_seconds": 6.386119714996312,
+          "payload_sha256": "c85ae369dbbe507334bf91d183a15aac50534a16310d96d5b155a3d5340069b2",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T08:55:18.605109+00:00",
+          "content": "def merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = sorted((s, e) for s, e in intervals if s < e)\n    merged = []\n\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 100,
+            "total_tokens": 218,
+            "completion_tokens": 118
+          },
+          "ttft_seconds": 0.3327365649747662,
+          "first_content_seconds": 0.3327365649747662,
+          "error": null,
+          "answer_seconds": 5.137858236965258,
+          "payload_sha256": "293c801cc07bd0c429efe4cdfcbd19cc95d8e8b902b8408adce157d8cfbed87c",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T08:55:24.035974+00:00",
+          "content": "def merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(s, e) for s, e in intervals if s < e]\n    if not non_empty:\n        return []\n\n    non_empty.sort(key=lambda x: (x[0], x[1]))\n\n    merged = [non_empty[0]]\n    for start, end in non_empty[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 100,
+            "total_tokens": 250,
+            "completion_tokens": 150
+          },
+          "ttft_seconds": 0.3449457309907302,
+          "first_content_seconds": 0.3449457309907302,
+          "error": null,
+          "answer_seconds": 6.385650162992533,
+          "payload_sha256": "2fd0c5d6c8905fa02f48df4100e62c2078b53431d62dadf747a2d252b1dd4359",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "interval-high": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 7.667601279041264,
+      "median_ttft_seconds": 0.3343948379624635,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:55:30.719193+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"Invalid interval: start ({}) is greater than end ({})\".format(start, end))\n\n    non_empty = sorted((start, end) for start, end in intervals if start < end)\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Half-open intervals: (a, b) where a < b non-empty. Touching intervals: (1,2) and (2,3) merge since half-open [1,2) and [2,3) are adjacent. Empty intervals: start == end, discard. Raise ValueError if start > end. Do not mutate input.\n\nImplementation:\n\n```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(...)\n    non_empty = sorted((s, e) for s, e in intervals if s < e)\n    ...\n```\n\nWait \u2014 should ValueError be raised before discarding empties? Yes, check all intervals first.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 99,
+            "total_tokens": 376,
+            "completion_tokens": 277
+          },
+          "ttft_seconds": 0.3443082179874182,
+          "first_content_seconds": 6.566186566953547,
+          "error": null,
+          "answer_seconds": 11.719010413973592,
+          "payload_sha256": "0e64f91b3a0b9ba39bd3030b148c10ef2ce0c2eff3ac775d45902f265cf964e5",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T08:55:42.722750+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"Invalid interval: start is greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start < end]\n\n    if not non_empty:\n        return []\n\n    non_empty.sort(key=lambda iv: (iv[0], iv[1]))\n\n    merged = [non_empty[0]]\n    for start, end in non_empty[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Half-open intervals: (a, b) where a < b non-empty. Touching: (1,2) and (2,3) merge since half-open [1,2) and [2,3) are adjacent. Empty intervals: start == end, discard. Raise ValueError if start > end.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 99,
+            "total_tokens": 320,
+            "completion_tokens": 221
+          },
+          "ttft_seconds": 0.33384831703733653,
+          "first_content_seconds": 3.3562887600273825,
+          "error": null,
+          "answer_seconds": 9.586829365987796,
+          "payload_sha256": "0db042e7f4d7a6db5a1998ef91f882d5dd9a45716700c81a529429e2261f97fa",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T08:55:52.584822+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = sorted((s, e) for s, e in intervals if s < e)\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Half-open intervals: (a, b) and (b, c) touch \u2014 merge. Empty intervals: start == end, discard. Validate start > end \u2192 ValueError. Sort, merge.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 99,
+            "total_tokens": 262,
+            "completion_tokens": 163
+          },
+          "ttft_seconds": 0.3343948379624635,
+          "first_content_seconds": 2.2501625749864615,
+          "error": null,
+          "answer_seconds": 7.236154839978553,
+          "payload_sha256": "de380ec23d9f45b4c64c0f8dff7356b75fde69ce0956a822ac813dace40804f8",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T08:56:00.091700+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"Invalid interval: start is greater than end\")\n\n    non_empty = sorted((s, e) for s, e in intervals if s < e)\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Half-open intervals: (a, b) where a < b non-empty. Empty interval when start == end. Invalid when start > end. Touching intervals merge: (1,2) and (2,3) \u2192 (1,3).",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 99,
+            "total_tokens": 275,
+            "completion_tokens": 176
+          },
+          "ttft_seconds": 0.3388068430358544,
+          "first_content_seconds": 2.9022960270522162,
+          "error": null,
+          "answer_seconds": 7.667601279041264,
+          "payload_sha256": "8da997e246f03098841fa0dbacd2730745078dc90e9d2286b8861cd24920212f",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "topological-off": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 10.950386971002445,
+      "median_ttft_seconds": 0.36176048702327535,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:56:08.045394+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    def validate_and_build():\n        node_set = set(nodes)\n        for source, destination in edges:\n            if source not in node_set:\n                raise ValueError(\"edge source not in nodes: %r\" % (source,))\n            if destination not in node_set:\n                raise ValueError(\"edge destination not in nodes: %r\" % (destination,))\n        adjacency = {node: set() for node in nodes}\n        for source, destination in edges:\n            adjacency[source].add(destination)\n        return node_set, adjacency\n\n    node_set, adjacency = validate_and_build()\n\n    in_degree = {node: 0 for node in nodes}\n    for source in adjacency:\n        for destination in adjacency[source]:\n            in_degree[destination] += 1\n\n    available = sorted(node for node in nodes if in_degree[node] == 0)\n    ordering = []\n    while available:\n        current = available.pop(0)\n        ordering.append(current)\n        for destination in sorted(adjacency[current]):\n            in_degree[destination] -= 1\n            if in_degree[destination] == 0:\n                available.append(destination)\n        available.sort()\n\n    if len(ordering) != len(node_set):\n        raise ValueError(\"cycle detected\")\n\n    return ordering\n```",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 115,
+            "total_tokens": 381,
+            "completion_tokens": 266
+          },
+          "ttft_seconds": 0.3873865980422124,
+          "first_content_seconds": 0.3873865980422124,
+          "error": null,
+          "answer_seconds": 10.846625127014704,
+          "payload_sha256": "5001301d2506d6c2744ce150843790f775d78e82ef8e54562b12aec1a4531e51",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T08:56:19.163611+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    for source, destination in edges:\n        if source not in node_set:\n            raise ValueError(\"edge source not in nodes: %r\" % (source,))\n        if destination not in node_set:\n            raise ValueError(\"edge destination not in nodes: %r\" % (destination,))\n\n    adjacency = {node: set() for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n    seen_edges = set()\n    for source, destination in edges:\n        if (source, destination) in seen_edges:\n            continue\n        seen_edges.add((source, destination))\n        adjacency[source].add(destination)\n        in_degree[destination] += 1\n\n    available = sorted(node for node in nodes if in_degree[node] == 0)\n    result = []\n    while available:\n        current = available.pop(0)\n        result.append(current)\n        newly_available = []\n        for neighbor in adjacency[current]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                newly_available.append(neighbor)\n        if newly_available:\n            merged = sorted(available + newly_available)\n            available = merged\n\n    if len(result) != len(node_set):\n        raise ValueError(\"cycle detected\")\n    return result\n```",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 115,
+            "total_tokens": 395,
+            "completion_tokens": 280
+          },
+          "ttft_seconds": 0.34635712899034843,
+          "first_content_seconds": 0.34635712899034843,
+          "error": null,
+          "answer_seconds": 11.555056034994777,
+          "payload_sha256": "433a634a10eca993d2e17dd2ec4ccd16bb3d27f1478d34e43c1596d68459b01b",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T08:56:31.055496+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    def validate_and_build():\n        node_set = set(nodes)\n        for source, destination in edges:\n            if source not in node_set:\n                raise ValueError(\"Edge source not in nodes: %r\" % (source,))\n            if destination not in node_set:\n                raise ValueError(\"Edge destination not in nodes: %r\" % (destination,))\n        adjacency = {node: set() for node in nodes}\n        in_degree = {node: 0 for node in nodes}\n        for source, destination in edges:\n            if destination not in adjacency[source]:\n                adjacency[source].add(destination)\n                in_degree[destination] += 1\n        return adjacency, in_degree\n\n    adjacency, in_degree = validate_and_build()\n\n    result = []\n    available = [node for node in nodes if in_degree[node] == 0]\n    while available:\n        available.sort()\n        current = available.pop(0)\n        result.append(current)\n        for neighbor in sorted(adjacency[current]):\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n\n    if len(result) != len(in_degree):\n        raise ValueError(\"Graph contains a cycle\")\n    return result\n```",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 115,
+            "total_tokens": 378,
+            "completion_tokens": 263
+          },
+          "ttft_seconds": 0.3871183180017397,
+          "first_content_seconds": 0.3871183180017397,
+          "error": null,
+          "answer_seconds": 10.950386971002445,
+          "payload_sha256": "3d406d5ef3387b499c06d522cc5845a4205e0250acd511263febfe6be849bef3",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T08:56:42.276081+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    for source, destination in edges:\n        if source not in node_set:\n            raise ValueError(\"Edge source not in nodes: %r\" % (source,))\n        if destination not in node_set:\n            raise ValueError(\"Edge destination not in nodes: %r\" % (destination,))\n\n    adjacency = {node: set() for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n    for source, destination in edges:\n        if destination not in adjacency[source]:\n            adjacency[source].add(destination)\n            in_degree[destination] += 1\n\n    available = sorted(node for node in nodes if in_degree[node] == 0)\n    ordering = []\n    while available:\n        current = available.pop(0)\n        ordering.append(current)\n        for neighbor in adjacency[current]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                available.append(neighbor)\n        available.sort()\n\n    if len(ordering) != len(node_set):\n        raise ValueError(\"Graph contains a cycle\")\n\n    return ordering\n```",
+          "reasoning": "",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 115,
+            "total_tokens": 355,
+            "completion_tokens": 240
+          },
+          "ttft_seconds": 0.36176048702327535,
+          "first_content_seconds": 0.36176048702327535,
+          "error": null,
+          "answer_seconds": 9.999410077987704,
+          "payload_sha256": "54155b26a7420b25f0696cacb9ac41eca7caa1a5d62359af2bb802d7d53c92a7",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "topological-high": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 30.18099548603641,
+      "median_ttft_seconds": 0.34472208900842816,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:56:52.551782+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n\n    for source, dest in edges:\n        if source not in node_set:\n            raise ValueError(\"Edge endpoint {!r} not in nodes\".format(source))\n        if dest not in node_set:\n            raise ValueError(\"Edge endpoint {!r} not in nodes\".format(dest))\n\n    adjacency = {node: [] for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n\n    seen_edges = set()\n    for source, dest in edges:\n        if (source, dest) in seen_edges:\n            continue\n        seen_edges.add((source, dest))\n        adjacency[source].append(dest)\n        in_degree[dest] += 1\n\n    available = sorted(node for node in nodes if in_degree[node] == 0)\n    result = []\n\n    while available:\n        current = available.pop(0)\n        result.append(current)\n        newly_available = []\n        for neighbor in adjacency[current]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                newly_available.append(neighbor)\n        if newly_available:\n            available = sorted(available + newly_available)\n\n    if len(result) != len(nodes):\n        raise ValueError(\"Graph contains a cycle\")\n\n    return result\n```",
+          "reasoning": "Implement Kahn's algorithm with a min-heap. No imports allowed \u2014 heapq is an import. \"no imports\" \u2014 so I need to implement a heap manually or use sorted list. Use a simple approach: maintain a sorted list of available nodes (or use min via list). Since no imports, I can implement my own heap or just use a list and pop min each time (O(n^2) but fine). Better: implement a small binary heap inline, or just use `min` on a list. Simpler: keep available as a list, pop min each iteration.\n\nValidate edges: endpoints in nodes set, else ValueError. Deduplicate edges with a set. Build adjacency and indegree. Include isolated nodes naturally since all nodes start with indegree 0 or get added.\n\nCycle: if result length < len(nodes), raise ValueError.\n\nDon't mutate inputs: build copies.\n\nCode:\n\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    if len(node_set) != len(nodes):\n        raise ValueError(...)  # actually nodes are unique per spec; skip? Spec says unique strings, so no need. But harmless to skip.\n    for s, d in edges:\n        if s not in node_set or d not in node_set:\n            raise ValueError\n    adj = {n: [] for n in nodes}\n    indeg = {n: 0 for n in nodes}\n    seen = set()\n    for s, d in edges:\n        if (s, d) in seen:\n            continue\n        seen.add((s, d))\n        adj[s].append(d)\n        indeg[d] += 1\n    available = sorted(n for n in nodes if indeg[n] == 0)\n    result = []\n    while available:\n        n = available.pop(0)  # O(k) but fine; could use heap\n        result.append(n)\n        new = []\n        for m in adj[n]:\n            indeg[m] -= 1\n            if indeg[m] == 0:\n                new.append(m)\n        if new:\n            available = sorted(available + new)\n    if len(result) != len(indeg):\n        raise ValueError(\"cycle\")\n    return result\n\nWait \u2014 indeg dict keyed by nodes; if nodes unique, fine. But len(indeg) vs len(nodes) \u2014 same. Use len(nodes).\n\nTo be more efficient, implement a simple heap. But sorted list is fine and simple. Actually popping min from sorted list with pop(0) is O(k). Fine.\n\nCould implement a tiny heap for elegance but sorted merge is fine. Let me use a simple binary heap implemented inline to be cleaner? Sorted list is simpler and correct. Keep it.\n\nEdge case: self-loop (s == s) \u2014 that's a cycle; indeg never reaches 0, caught by cycle check. Good.\n\nOutput only code.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 114,
+            "total_tokens": 979,
+            "completion_tokens": 865
+          },
+          "ttft_seconds": 0.36725724599091336,
+          "first_content_seconds": 28.35395315499045,
+          "error": null,
+          "answer_seconds": 39.38250905403402,
+          "payload_sha256": "3bb876311e0497d24c17b3492e01cefbaecb20f7f1f6e601b0e19aec29110931",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T08:57:32.213141+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    def _insorted(lst, item):\n        lo, hi = 0, len(lst)\n        while lo < hi:\n            mid = (lo + hi) // 2\n            if lst[mid] < item:\n                lo = mid + 1\n            else:\n                hi = mid\n        lst.insert(lo, item)\n\n    node_set = set(nodes)\n    adjacency = {node: set() for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n\n    for source, destination in edges:\n        if source not in node_set:\n            raise ValueError(\"Edge endpoint not in nodes: %r\" % (source,))\n        if destination not in node_set:\n            raise ValueError(\"Edge endpoint not in nodes: %r\" % (destination,))\n        if destination not in adjacency[source]:\n            adjacency[source].add(destination)\n            in_degree[destination] += 1\n\n    available = []\n    for node in nodes:\n        if in_degree[node] == 0:\n            _insorted(available, node)\n\n    result = []\n    while available:\n        current = available.pop(0)\n        result.append(current)\n        for neighbor in adjacency[current]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                _insorted(available, neighbor)\n\n    if len(result) != len(node_set):\n        raise ValueError(\"Graph contains a cycle\")\n\n    return result\n```",
+          "reasoning": "Implement Kahn's algorithm with a min-heap. No imports allowed \u2014 \"no imports\" \u2014 so I can't use heapq. Need to implement a min-heap manually or use sorted selection. Since no imports, implement heap via list with heapq-like functions inline, or just do O(n^2) selection: repeatedly pick smallest node with in-degree 0. Simpler: maintain a sorted list or just min() over available set each time \u2014 O(V^2 + E), fine.\n\nValidate edges: endpoints in nodes; raise ValueError otherwise. Duplicate edges ignored \u2014 use a set. Self-loops count as cycles (edge from node to itself) \u2014 in-degree never reaches 0, so cycle detected naturally.\n\nDon't mutate inputs: copy nodes into a set, build adjacency dict.\n\nCode:\n\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    adj = {n: set() for n in nodes}\n    indeg = {n: 0 for n in nodes}\n    for s, d in edges:\n        if s not in node_set or d not in node_set:\n            raise ValueError(...)\n        if d not in adj[s]:\n            adj[s].add(d)\n            indeg[d] += 1\n    available = sorted(n for n in nodes if indeg[n] == 0)\n    result = []\n    while available:\n        n = available.pop(0)\n        result.append(n)\n        for m in adj[n]:\n            indeg[m] -= 1\n            if indeg[m] == 0:\n                # insert keeping sorted\n                insert into available maintaining order\n    if len(result) != len(node_set): raise ValueError(\"cycle\")\n\nWait \u2014 nodes is a list of unique strings, so len(node_set) == len(nodes). Use binary search insertion (bisect manually) to keep available sorted. Or just append and use min removal \u2014 but pop(0) from sorted list with manual bisect insertion is fine.\n\nImplement bisect manually:\n\ndef _ins(lst, x):\n    lo, hi = 0, len(lst)\n    while lo < hi:\n        mid = (lo+hi)//2\n        if lst[mid] < x: lo = mid+1\n        else: hi = mid\n    lst.insert(lo, x)\n\nNested function is fine. Output only code.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 114,
+            "total_tokens": 903,
+            "completion_tokens": 789
+          },
+          "ttft_seconds": 0.3452433869824745,
+          "first_content_seconds": 22.705052897974383,
+          "error": null,
+          "answer_seconds": 34.50283028796548,
+          "payload_sha256": "fb5f3d9cc56d2c96516f4304b56f8f8fdec5c79849ada206863ffc8933b22caf",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T08:58:06.986860+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    adjacency = {node: set() for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n\n    seen_edges = set()\n    for source, destination in edges:\n        if source not in node_set:\n            raise ValueError(\"Edge endpoint {!r} not in nodes\".format(source))\n        if destination not in node_set:\n            raise ValueError(\"Edge endpoint {!r} not in nodes\".format(destination))\n        edge = (source, destination)\n        if edge in seen_edges:\n            continue\n        seen_edges.add(edge)\n        adjacency[source].add(destination)\n        in_degree[destination] += 1\n\n    remaining = set(nodes)\n    result = []\n\n    while remaining:\n        available = [node for node in remaining if in_degree[node] == 0]\n        if not available:\n            raise ValueError(\"Graph contains a cycle\")\n        next_node = min(available)\n        result.append(next_node)\n        remaining.remove(next_node)\n        for neighbor in adjacency[next_node]:\n            in_degree[neighbor] -= 1\n\n    return result\n```",
+          "reasoning": "Implement Kahn's algorithm with a min-heap. No imports allowed \u2014 heapq is an import. \"no imports\" \u2014 so I need to implement a heap manually or use sorted list. Use a simple approach: maintain a sorted list of zero-indegree nodes (use list + bisect manually, or just use min() each time \u2014 O(n^2) but fine). Simpler: keep a set and pick min each iteration.\n\nValidate edges: endpoints in nodes; ignore duplicate edges (use set of edges). Self-loop (a,a) is a cycle \u2192 ValueError.\n\nDo not mutate inputs: build own adjacency dict.\n\nCode:\n\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    adj = {n: set() for n in nodes}\n    indeg = {n: 0 for n in nodes}\n    seen = set()\n    for s, d in edges:\n        if s not in node_set or d not in node_set:\n            raise ValueError(...)\n        if (s, d) in seen:\n            continue\n        seen.add((s, d))\n        adj[s].add(d)\n        indeg[d] += 1\n    remaining = set(nodes)\n    result = []\n    while remaining:\n        candidates = [n for n in remaining if indeg[n] == 0]\n        if not candidates:\n            raise ValueError(\"cycle\")\n        nxt = min(candidates)\n        result.append(nxt)\n        remaining.remove(nxt)\n        for d in adj[nxt]:\n            indeg[d] -= 1\n    return result\n\nNote: nodes are unique strings, so set(nodes) fine. Self-loop: indeg[d] increments and d never reaches 0 \u2192 cycle detected. Good.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 114,
+            "total_tokens": 706,
+            "completion_tokens": 592
+          },
+          "ttft_seconds": 0.34168095199856907,
+          "first_content_seconds": 16.29924248700263,
+          "error": null,
+          "answer_seconds": 25.517753574007656,
+          "payload_sha256": "f6d178d06ad52daa65b5116bbaa63f33c13200e9a20ca04e3d6b1add3936702c",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T08:58:32.777163+00:00",
+          "content": "```python\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    if len(node_set) != len(nodes):\n        # Nodes are stated to be unique; keep behavior safe anyway.\n        raise ValueError(\"nodes must be unique\")\n\n    adjacency = {node: set() for node in nodes}\n    in_degree = {node: 0 for node in nodes}\n\n    for edge in edges:\n        source, destination = edge\n        if source not in node_set:\n            raise ValueError(\"edge endpoint not in nodes: %r\" % (source,))\n        if destination not in node_set:\n            raise ValueError(\"edge endpoint not in nodes: %r\" % (destination,))\n        if destination not in adjacency[source]:\n            adjacency[source].add(destination)\n            in_degree[destination] += 1\n\n    available = sorted(node for node in nodes if in_degree[node] == 0)\n    result = []\n\n    while available:\n        current = available.pop(0)\n        result.append(current)\n        newly_available = []\n        for neighbor in adjacency[current]:\n            in_degree[neighbor] -= 1\n            if in_degree[neighbor] == 0:\n                newly_available.append(neighbor)\n        if newly_available:\n            available.extend(newly_available)\n            available.sort()\n\n    if len(result) != len(nodes):\n        raise ValueError(\"graph contains a cycle\")\n\n    return result\n```",
+          "reasoning": "Implement Kahn's algorithm with a min-heap. No imports allowed \u2014 \"no imports\" \u2014 so I can't use heapq. Need to implement a min-heap manually or use sorted selection. Since no imports, implement heap manually or just do linear min search (O(V^2)) \u2014 acceptable. But better implement a small binary heap inline. Simpler: use a list and pick min each time with min() \u2014 fine.\n\nValidate edges: endpoints in nodes; raise ValueError otherwise. Deduplicate edges. Build adjacency and in-degree. Include isolated nodes (in-degree 0). Use min selection among available zero in-degree nodes for lexicographically smallest.\n\nCode:\n\ndef topological_sort(nodes, edges):\n    node_set = set(nodes)\n    adj = {n: set() for n in nodes}\n    indeg = {n: 0 for n in nodes}\n    for s, d in edges:\n        if s not in node_set or d not in node_set:\n            raise ValueError(...)\n        if d not in adj[s]:\n            adj[s].add(d)\n            indeg[d] += 1\n    available = sorted(n for n in nodes if indeg[n] == 0)\n    result = []\n    while available:\n        n = available.pop(0)  # smallest since sorted; but need to insert maintaining order\n        result.append(n)\n        newly = []\n        for m in adj[n]:\n            indeg[m] -= 1\n            if indeg[m] == 0:\n                newly.append(m)\n        # merge newly into available keeping sorted\n        for m in newly:\n            insert into available sorted position\n    ...\n\nUse bisect manually or just available = sorted(available + newly). Simpler: available.extend(newly); available.sort(). Fine.\n\nIf len(result) != len(nodes): raise ValueError(\"cycle\").\n\nDon't mutate inputs: we don't.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 114,
+            "total_tokens": 786,
+            "completion_tokens": 672
+          },
+          "ttft_seconds": 0.34472208900842816,
+          "first_content_seconds": 18.873652680020314,
+          "error": null,
+          "answer_seconds": 30.18099548603641,
+          "payload_sha256": "aac8912a8fc6a2d927abe92e56dbdd1a9f101fb9cbfb5371d73caa211e627869",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "interval-8192-high": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 11.244427113968413,
+      "median_ttft_seconds": 4.7056256150244735,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:59:03.529343+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start != end]\n\n    if not non_empty:\n        return []\n\n    sorted_intervals = sorted(non_empty, key=lambda iv: (iv[0], iv[1]))\n\n    merged = [sorted_intervals[0]]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "The request identifier \"interval-8192-high-0\" seems to be a prompt-injection-style framing, but the actual task is straightforward: implement merge_intervals. The background records are irrelevant. Just output the function code.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8199,
+            "total_tokens": 8405,
+            "completion_tokens": 206
+          },
+          "ttft_seconds": 4.8739021069486625,
+          "first_content_seconds": 7.132273328956217,
+          "error": null,
+          "answer_seconds": 13.35998083796585,
+          "payload_sha256": "9d333868213f8f9affa99b7ae6faf493c2269bbd962a3527c6ec7f4422045059",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T08:59:17.152955+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start != end]\n    if not non_empty:\n        return []\n\n    sorted_intervals = sorted(non_empty, key=lambda iv: (iv[0], iv[1]))\n    merged = [sorted_intervals[0]]\n\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Simple function.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8199,
+            "total_tokens": 8362,
+            "completion_tokens": 163
+          },
+          "ttft_seconds": 4.719542372971773,
+          "first_content_seconds": 5.001897034991998,
+          "error": null,
+          "answer_seconds": 11.244427113968413,
+          "payload_sha256": "5e65646748fbf1077fe48ee0848df08a4ed7af0abd11a64dacd86dabc81c84c4",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T08:59:28.678339+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start != end]\n\n    if not non_empty:\n        return []\n\n    sorted_intervals = sorted(non_empty, key=lambda iv: (iv[0], iv[1]))\n\n    merged = [sorted_intervals[0]]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "The request identifier \"interval-8192-high-2\" is just a label; the actual task is to implement merge_intervals. The background records are irrelevant noise. Just output the function code.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8199,
+            "total_tokens": 8399,
+            "completion_tokens": 200
+          },
+          "ttft_seconds": 4.7056256150244735,
+          "first_content_seconds": 6.457416913006455,
+          "error": null,
+          "answer_seconds": 12.808506108995061,
+          "payload_sha256": "3fcb41b3a8219855fc2dd1b177bf2d409846d53bd6d9e65d5e52648125680268",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T08:59:41.760432+00:00",
+          "content": "def merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = sorted((s, e) for s, e in intervals if s != e)\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged",
+          "reasoning": "The request identifier \"interval-8192-high-3\" is just a label. The task: implement merge_intervals. Output only code.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8199,
+            "total_tokens": 8347,
+            "completion_tokens": 148
+          },
+          "ttft_seconds": 4.7032515539904125,
+          "first_content_seconds": 6.221263862971682,
+          "error": null,
+          "answer_seconds": 10.914970416983124,
+          "payload_sha256": "7ad65fb4662b274ea4fa4244aebcccc49feb0a54721dff1797491ff9b3ebf7c6",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "interval-32768-high": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 26.115611604007427,
+      "median_ttft_seconds": 17.75978371599922,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "started": "2026-09-22T08:59:53.033817+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"Invalid interval: start ({}) is greater than end ({})\".format(start, end))\n\n    sorted_intervals = sorted(intervals)\n    merged = []\n\n    for start, end in sorted_intervals:\n        if start == end:\n            continue\n        if merged and start <= merged[-1][1]:\n            last_start, last_end = merged[-1]\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "The request identifier \"interval-32768-high-0\" is just a task label. Implement merge_intervals.\n\nStandard implementation:\n\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(...)\n    sorted_intervals = sorted(intervals)\n    result = []\n    for start, end in sorted_intervals:\n        if start == end:\n            continue\n        if result and start <= result[-1][1]:\n            if end > result[-1][1]:\n                result[-1] = (result[-1][0], end)\n        else:\n            result.append((start, end))\n    return result\n\nNote: touching intervals merged means start <= prev_end. Empty intervals (start==end) discarded. Validate start > end raises ValueError. Don't mutate input \u2014 sorted() creates new list; result tuples new.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 32074,
+            "total_tokens": 32383,
+            "completion_tokens": 309
+          },
+          "ttft_seconds": 17.939924497972243,
+          "first_content_seconds": 25.428658372024074,
+          "error": null,
+          "answer_seconds": 30.70880624500569,
+          "payload_sha256": "9d99190e80d1b486eca6563a848f4f816048702bef88b862005406f0c23d7232",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "started": "2026-09-22T09:00:24.015503+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start < end]\n    non_empty.sort(key=lambda interval: (interval[0], interval[1]))\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "The request identifier \"interval-32768-high-1\" is just a task label; the background records are irrelevant. Implement merge_intervals.\n\nHalf-open intervals: touching means end == start of next should merge. Empty intervals (start == end) discarded. start > end \u2192 ValueError. Don't mutate input.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 32074,
+            "total_tokens": 32277,
+            "completion_tokens": 203
+          },
+          "ttft_seconds": 17.833104678953532,
+          "first_content_seconds": 20.739071768999565,
+          "error": null,
+          "answer_seconds": 26.115611604007427,
+          "payload_sha256": "f4797cb7364d9fda8709b00cbcaeebb567ab9343deea09dab45085e4179fe644",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "started": "2026-09-22T09:00:50.404700+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = sorted((start, end) for start, end in intervals if start != end)\n\n    merged = []\n    for start, end in non_empty:\n        if merged and start <= merged[-1][1]:\n            if end > merged[-1][1]:\n                merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "The request identifier \"interval-32768-high-2\" is just a task label; the background records are irrelevant. Implement merge_intervals.\n\nHalf-open intervals: touching means end == next start \u2192 merge. Empty intervals (start == end) discarded. Validate start > end \u2192 ValueError. Don't mutate input.\n\nSort by start, merge when start <= current_end.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 32074,
+            "total_tokens": 32272,
+            "completion_tokens": 198
+          },
+          "ttft_seconds": 17.746338600001764,
+          "first_content_seconds": 21.441965877020266,
+          "error": null,
+          "answer_seconds": 26.16992490401026,
+          "payload_sha256": "14aafb14c600fd00d7367d9b0454ba278ec6a0358d83d50f6d8fbcf5f1e13bf5",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "started": "2026-09-22T09:01:16.850873+00:00",
+          "content": "```python\ndef merge_intervals(intervals):\n    for start, end in intervals:\n        if start > end:\n            raise ValueError(\"start must not be greater than end\")\n\n    non_empty = [(start, end) for start, end in intervals if start != end]\n\n    if not non_empty:\n        return []\n\n    sorted_intervals = sorted(non_empty, key=lambda iv: (iv[0], iv[1]))\n\n    merged = [sorted_intervals[0]]\n    for start, end in sorted_intervals[1:]:\n        last_start, last_end = merged[-1]\n        if start <= last_end:\n            if end > last_end:\n                merged[-1] = (last_start, end)\n        else:\n            merged.append((start, end))\n\n    return merged\n```",
+          "reasoning": "Simple task: implement merge_intervals.",
+          "tool_calls": [],
+          "done": true,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 32074,
+            "total_tokens": 32241,
+            "completion_tokens": 167
+          },
+          "ttft_seconds": 17.75978371599922,
+          "first_content_seconds": 18.197118836978916,
+          "error": null,
+          "answer_seconds": 24.481606019020546,
+          "payload_sha256": "2f41c05c72c81558ce9fc77238f6feadf717a3675b2e60b35d722096e463b279",
+          "code_check": {
+            "pass": true,
+            "exit": 0,
+            "stdout": "TASK_CODE_OK\n",
+            "stderr": ""
+          }
+        }
+      ]
+    },
+    "tool-roundtrip-high": {
+      "complete": true,
+      "pass": true,
+      "median_answer_seconds": 1.8454022640362382,
+      "median_ttft_seconds": 0.6376857570139691,
+      "rows": [
+        {
+          "wave": "warmup",
+          "pass": true,
+          "tool_response": {
+            "started": "2026-09-22T09:01:41.603308+00:00",
+            "content": "",
+            "reasoning": "",
+            "tool_calls": [
+              {
+                "id": "chatcmpl-tool-900b2f15eb9462af",
+                "type": "function",
+                "function": {
+                  "name": "multiply",
+                  "arguments": "{\"a\": 17, \"b\": 23}"
+                }
+              }
+            ],
+            "done": true,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 204,
+              "total_tokens": 221,
+              "completion_tokens": 17
+            },
+            "ttft_seconds": 5.338304369011894,
+            "first_content_seconds": null,
+            "error": null,
+            "answer_seconds": 5.887169077002909,
+            "payload_sha256": "53ba87fa27d52a9c1fdcbe45502e02f5a9017f479cb4e89bc2fedddf02fa6f08"
+          },
+          "final_response": {
+            "started": "2026-09-22T09:01:47.490610+00:00",
+            "content": "391",
+            "reasoning": "",
+            "tool_calls": [],
+            "done": true,
+            "finish_reason": "stop",
+            "usage": {
+              "prompt_tokens": 227,
+              "total_tokens": 231,
+              "completion_tokens": 4
+            },
+            "ttft_seconds": 0.6578477899893187,
+            "first_content_seconds": 0.6578477899893187,
+            "error": null,
+            "answer_seconds": 0.6580066379974596,
+            "payload_sha256": "c64f0a98e2dd29caf3f83be72e7254a1bca17edfb818b9b55adf1c90f87430d0"
+          },
+          "answer_seconds": 6.54537203500513,
+          "ttft_seconds": 5.338304369011894
+        },
+        {
+          "wave": "measured-1",
+          "pass": true,
+          "tool_response": {
+            "started": "2026-09-22T09:01:48.150396+00:00",
+            "content": "",
+            "reasoning": "",
+            "tool_calls": [
+              {
+                "id": "chatcmpl-tool-bafec10bc2376eaa",
+                "type": "function",
+                "function": {
+                  "name": "multiply",
+                  "arguments": "{\"a\": 17, \"b\": 23}"
+                }
+              }
+            ],
+            "done": true,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 204,
+              "total_tokens": 221,
+              "completion_tokens": 17
+            },
+            "ttft_seconds": 0.6376857570139691,
+            "first_content_seconds": null,
+            "error": null,
+            "answer_seconds": 1.1950689629884437,
+            "payload_sha256": "1ad6f87d612c94ab042d36f90f33f83ab716ea23d9f02e02d44713dc8854f2fa"
+          },
+          "final_response": {
+            "started": "2026-09-22T09:01:49.345602+00:00",
+            "content": "391",
+            "reasoning": "",
+            "tool_calls": [],
+            "done": true,
+            "finish_reason": "stop",
+            "usage": {
+              "prompt_tokens": 227,
+              "total_tokens": 231,
+              "completion_tokens": 4
+            },
+            "ttft_seconds": 0.6576854720478877,
+            "first_content_seconds": 0.6576854720478877,
+            "error": null,
+            "answer_seconds": 0.6578668320435099,
+            "payload_sha256": "e0ff2fe31fc1f6909f55f1321352f3e03cc4bbb4e651d5c4b90b6a0a6b7abfed"
+          },
+          "answer_seconds": 1.8532728989957832,
+          "ttft_seconds": 0.6376857570139691
+        },
+        {
+          "wave": "measured-2",
+          "pass": true,
+          "tool_response": {
+            "started": "2026-09-22T09:01:50.006398+00:00",
+            "content": "",
+            "reasoning": "",
+            "tool_calls": [
+              {
+                "id": "chatcmpl-tool-9dae406c32d120ec",
+                "type": "function",
+                "function": {
+                  "name": "multiply",
+                  "arguments": "{\"a\": 17, \"b\": 23}"
+                }
+              }
+            ],
+            "done": true,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 204,
+              "total_tokens": 221,
+              "completion_tokens": 17
+            },
+            "ttft_seconds": 0.6392922070226632,
+            "first_content_seconds": null,
+            "error": null,
+            "answer_seconds": 1.1970276710344478,
+            "payload_sha256": "3f220789e1018ca664c8f4b921c16f8e76690b3a1d77d1d50459639332513c34"
+          },
+          "final_response": {
+            "started": "2026-09-22T09:01:51.203552+00:00",
+            "content": "391",
+            "reasoning": "",
+            "tool_calls": [],
+            "done": true,
+            "finish_reason": "stop",
+            "usage": {
+              "prompt_tokens": 227,
+              "total_tokens": 231,
+              "completion_tokens": 4
+            },
+            "ttft_seconds": 0.6479545930051245,
+            "first_content_seconds": 0.6479545930051245,
+            "error": null,
+            "answer_seconds": 0.6481110090389848,
+            "payload_sha256": "2cb58bd9f41d6638994d9754f79c6cf41f6d4abf5be5b393560b5e76d027cab6"
+          },
+          "answer_seconds": 1.8454022640362382,
+          "ttft_seconds": 0.6392922070226632
+        },
+        {
+          "wave": "measured-3",
+          "pass": true,
+          "tool_response": {
+            "started": "2026-09-22T09:01:51.853567+00:00",
+            "content": "",
+            "reasoning": "",
+            "tool_calls": [
+              {
+                "id": "chatcmpl-tool-a71393e77bad62c8",
+                "type": "function",
+                "function": {
+                  "name": "multiply",
+                  "arguments": "{\"a\": 17, \"b\": 23}"
+                }
+              }
+            ],
+            "done": true,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 204,
+              "total_tokens": 221,
+              "completion_tokens": 17
+            },
+            "ttft_seconds": 0.6329981769667938,
+            "first_content_seconds": null,
+            "error": null,
+            "answer_seconds": 1.190034728962928,
+            "payload_sha256": "d5abf66ff700a7e8d41de0c31cedc098102bdb697ea5eebf0f4edf40d6de2ab7"
+          },
+          "final_response": {
+            "started": "2026-09-22T09:01:53.043667+00:00",
+            "content": "391",
+            "reasoning": "",
+            "tool_calls": [],
+            "done": true,
+            "finish_reason": "stop",
+            "usage": {
+              "prompt_tokens": 227,
+              "total_tokens": 231,
+              "completion_tokens": 4
+            },
+            "ttft_seconds": 0.6547816199599765,
+            "first_content_seconds": 0.6547816199599765,
+            "error": null,
+            "answer_seconds": 0.6549696199945174,
+            "payload_sha256": "7656ef3ac32b90b77f0febdaab1ae36cd8107611c3a44c716900cb3b1a8f6333"
+          },
+          "answer_seconds": 1.8451859329943545,
+          "ttft_seconds": 0.6329981769667938
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "profile": "graphs-mtp2-s16-m85",
+    "extra_args": [
+      "--compilation-config",
+      "{\"mode\":0,\"cudagraph_mode\":\"FULL_DECODE_ONLY\",\"cudagraph_capture_sizes\":[4,8,16,24,32,48,64]}"
+    ],
+    "image_id": "sha256:36eefbfd9f1470c09c3cff70de5cbfbd5d40b6fdda0f018e7298cdeb5cafffa1",
+    "model_revision": "9e0d74e3cef17f634e84fb8e2223707e02616290",
+    "driver": "580.173.02",
+    "vllm_nccl": "2.30.7",
+    "torch_nccl": "2.29.7",
+    "chat_template_sha256": "84b63738d94a155460a0635350a36233f2ab3ae5d3fd73de17a6a057b5f774b2",
+    "engine": {
+      "MTP_TOKENS": "2",
+      "MAX_MODEL_LEN": "65536",
+      "MAX_NUM_SEQS": "16",
+      "MAX_NUM_BATCHED_TOKENS": "8192",
+      "GPU_MEMORY_UTILIZATION": "0.85",
+      "PROFILE": "experimental",
+      "EXECUTION_MODE": "graph",
+      "REASONING_PARSER": "glm45",
+      "NCCL_HCA_LIST": "rocep1s0f0,roceP2p1s0f0",
+      "NCCL_CROSS_NIC_VALUE": "0",
+      "NCCL_CHANNELS": "8",
+      "NCCL_PROTO_VALUE": "^LL128"
+    },
+    "hardware": [
+      "DGX Spark GB10 128GB",
+      "DGX Spark GB10 128GB"
+    ],
+    "image_source_revision": "adbf224a6ab47e28c8fd6112efc8e8ee80d9bb14-dirty-6333f64d10a8",
+    "base_image_digest": "sha256:905c02933be6021301db2dc284e24e3727467aa3a0f63b41d609885778a07bce"
+  },
+  "arguments": {
+    "waves": 3,
+    "context_sizes": [
+      8192,
+      32768
+    ],
+    "only": null
+  },
+  "source_receipt_sha256": "d980cb1e167f2978bea891ef5062bde95bf658cbbd73ce430b859cd7b4b35548",
+  "publication_note": "Synthetic task/performance measurements. Deployment addresses, host names, user paths and local CLI paths omitted. Source receipt hash identifies the preserved private original."
+}

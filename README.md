@@ -8,6 +8,10 @@ A separate [64K throughput tuning campaign](docs/tuning-2026-09-21.md) tests bot
 RoCE links, CUDA graphs, larger cache capacity, and mixed workloads. Its results
 use a different methodology and do not replace the historical receipt below.
 
+The subsequent [MTP0/1/2/3 comparison](docs/mtp-results-2026-09-22.md) measures
+complete coding/tool answers and High-reasoning throughput at C1/C8/C16,
+including failed task cases and the single-request/shared-throughput tradeoff.
+
 ## Performance
 
 Two matched cold starts. Each scenario used one warm-up wave followed by three measured waves with 512 completion tokens per request. The primary number is the arithmetic mean of the two cold-run medians.
@@ -84,6 +88,8 @@ No model tensor or Hugging Face configuration field is rewritten. See [`docs/ada
 - `scripts/start-tp2.sh` / `scripts/stop-tp2.sh` — worker-first TP2 lifecycle.
 - `bench/benchmark.py` — the frozen C1/C4/C6/C8 benchmark harness.
 - `bench/tune.py` — experimental counting, coding, reasoning, and mixed-task measurements.
+- `bench/task_latency.py` — complete coding/tool answers, execution checks, and long-prompt latency.
+- `docs/mtp-comparison.md` — controlled MTP-depth comparison protocol and selection criteria.
 - `docs/tuning.md` — hardware qualification, template correction, and tuning procedure.
 - `results/` — sanitized historical and tuning benchmark receipts.
 
